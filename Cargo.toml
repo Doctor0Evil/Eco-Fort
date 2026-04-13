@@ -1,0 +1,7 @@
+[workspace]
+members = [
+    "crates/ecosafety_core",
+    "crates/qpudataschemashard",
+    "crates/qpudatashardwriter",
+]
+resolver = "2"
