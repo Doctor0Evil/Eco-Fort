@@ -1,0 +1,8 @@
+-- file: qpudatashards/particles/template.timeseries.v1.aln
+aln particle template.timeseries.v1
+  field nodeid     string      -- unique node id
+  field timestamp  timestamp   -- ISO8601 UTC
+  field rcalib01   f64         -- 0..1 calibration residual
+  field medium     string      -- e.g. water, air, soil
+  field schema_tag string      -- identifies concrete family
+end
