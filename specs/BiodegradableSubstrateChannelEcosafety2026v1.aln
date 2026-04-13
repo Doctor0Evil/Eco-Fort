@@ -1,0 +1,81 @@
+spec BiodegradableSubstrateChannelEcosafety2026 v1.0.0
+  purpose  Full ecosafety shard for deployed biodegradable substrate channels,
+           extending CyboquaticPhoenixEcosafety2026v2 with substrate‑specific
+           risk coordinates. Non‑actuating; gates deployment via KER.
+
+  requires EcoNetSchemaShard2026 v1.0.0
+  requires invariant kerdeployable v2.0.0
+  requires CyboquaticEcosafetyCoreV2
+
+  shardschema
+    path qpudatashards/ecosafety/BiodegradableSubstrateChannelEcosafety2026v1.csv
+    role EcosafetyNodeSubstrateChannel
+    fields
+      nodeid                  -- string, node identifier
+      channel_id              -- string, channel identifier
+      substrate_id            -- string, substrate formulation ID
+      region_id               -- string, region/basin
+      basin_id                -- string, sub‑basin
+      timestamp               -- datetime, observation window
+
+      renergy                 -- RiskCoord, energy plane
+      rhydraulic              -- RiskCoord, hydraulic plane
+      rbiology                -- RiskCoord, biology plane
+      rcarbon                 -- RiskCoord, carbon plane
+      rmaterials              -- RiskCoord, materials plane
+      rbiodiversity           -- RiskCoord, biodiversity plane
+      rpfasresid_channel      -- RiskCoord, PFAS residence risk
+
+      rsigma_energy           -- RiskCoord, sensor uncertainty
+      rcalib                  -- RiskCoord, ingest‑schema quality
+
+      vt                      -- Residual, Lyapunov residual
+      kscore                  -- float, K factor
+      escore                  -- float, E factor
+      rscore                  -- float, R factor
+      dtsensor                -- float, sensor trust
+      dtdata                  -- float, data trust
+      kadj                    -- float, adjusted K
+      eadj                    -- float, adjusted E
+
+      deploydecision          -- string, Deploy|ResearchOnly|BlockedByCalib|BlockedByRisk|BlockedByKER
+      lane                    -- string, RESEARCH|PRODUCTION
+      evidencehex             -- hex64, evidence hash
+      signinghex              -- hex64, signing identity
+
+  corridors
+    renergy
+      safeband 0.0 0.10 goldband 0.10 0.13 hardband 0.13 1.00 lyapweight 1.0 channel energy
+
+    rhydraulic
+      safeband 0.0 0.10 goldband 0.10 0.13 hardband 0.13 1.00 lyapweight 1.2 channel hydraulics
+
+    rbiology
+      safeband 0.0 0.10 goldband 0.10 0.13 hardband 0.13 1.00 lyapweight 1.0 channel biology
+
+    rcarbon
+      safeband 0.0 0.10 goldband 0.10 0.13 hardband 0.13 1.00 lyapweight 1.3 channel carbon
+
+    rmaterials
+      safeband 0.0 0.10 goldband 0.10 0.13 hardband 0.13 1.00 lyapweight 1.1 channel materials
+
+    rbiodiversity
+      safeband 0.0 0.10 goldband 0.10 0.13 hardband 0.13 1.00 lyapweight 1.0 channel biology
+
+    rpfasresid_channel
+      safeband 0.0 0.10 goldband 0.10 0.13 hardband 0.13 1.00 lyapweight 1.2 channel materials
+
+    rsigma_energy
+      safeband 0.0 0.10 goldband 0.10 0.30 hardband 0.30 1.00 lyapweight 0.9 channel dataquality
+
+    rcalib
+      safeband 0.0 0.00 goldband 0.00 0.04 hardband 0.13 1.00 lyapweight 0.8 channel dataquality
+
+  writepolicy
+    gate1_schema_from   EcoNetSchemaShard2026v1
+    gate2_rcalib_gold   rcalib <= 0.04
+    gate3_ker_production
+      kmin  0.90
+      emin  0.90
+      rmax  0.13
+end
