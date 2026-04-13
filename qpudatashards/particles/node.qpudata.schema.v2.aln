@@ -1,0 +1,13 @@
+-- file: qpudatashards/particles/node.qpudata.schema.v2.aln
+aln particle node.qpudata.schema.v2
+  field substrate_id      string?   -- nullable
+  field rpfasresid_channel f64?     -- nullable in storage
+  ...
+end
+
+aln contract invariant.qpudata.rpfasresid_required_if_substrate
+  (row : node.qpudata.schema.v2) -> bool
+  let has_substrate = row.substrate_id != ""
+  let has_channel   = row.rpfasresid_channel.is_some
+  (not has_substrate) or has_channel
+end
