@@ -1,0 +1,89 @@
+spec BiodegradableSubstrateChannelKinetics2026 v1.0.0
+  purpose  Lab/field kinetic evidence for biodegradable substrates used in
+           Cyboquatic channels. Encodes t90, toxicity, and micro‑residue
+           risks, feeding into the materials plane for ecosafety gating.
+
+  requires EcoNetSchemaShard2026 v1.0.0
+  requires invariant kerdeployable v2.0.0
+  requires EconetMaterialCybo v1.0.0
+
+  shardschema
+    path qpudatashards/materials/BiodegradableSubstrateChannelKinetics2026v1.csv
+    role MaterialKineticsEvidence
+    fields
+      substrate_id            -- string, substrate formulation ID
+      channel_type            -- string, tray|lining|packed_bed|wetland_medium
+      region_id               -- string, region/basin
+      test_id                 -- string, unique test ID
+      lab_site                -- string, lab or field site
+      fluid_kind              -- string, wastewater|canal_water|stormwater
+      temp_c                  -- float, test temperature °C
+      flow_regime             -- string, laminar|transitional|turbulent
+      t90_days                -- float, time to 90% mass loss
+      mass_loss_fraction_90d  -- float, mass fraction lost in 90d
+      leachate_chem_cec_mgL   -- float, CEC concentration mg/L
+      leachate_pfas_ugL       -- float, PFAS concentration µg/L
+      micro_residue_count_per_L-- float, micro‑residue count/L
+      bulk_density_kgm3       -- float, bulk density kg/m³
+
+      rt90                    -- RiskCoord, degradation risk
+      rtox                    -- RiskCoord, toxicity risk
+      rmicro                  -- RiskCoord, micro‑residue risk
+      rpfasresid              -- RiskCoord, residual PFAS risk
+      rmaterials_substrate    -- RiskCoord, composite materials risk
+
+      corridor_present        -- boolean, corridors referenced flag
+      rcalib                  -- RiskCoord, ingest‑schema quality
+      vt_materials            -- Residual, Lyapunov residual
+      kscore                  -- float, K factor
+      escore                  -- float, E factor
+      rscore                  -- float, R factor
+      lane                    -- string, RESEARCH only
+      evidencehex             -- hex64, evidence hash
+      signinghex              -- hex64, signing identity
+
+  corridors
+    rt90
+      safeband 0.0 0.10
+      goldband 0.10 0.13
+      hardband 0.13 1.00
+      lyapweight 1.0 channel materials
+
+    rtox
+      safeband 0.0 0.10
+      goldband 0.10 0.13
+      hardband 0.13 1.00
+      lyapweight 1.1 channel materials
+
+    rmicro
+      safeband 0.0 0.10
+      goldband 0.10 0.13
+      hardband 0.13 1.00
+      lyapweight 1.0 channel materials
+
+    rpfasresid
+      safeband 0.0 0.10
+      goldband 0.10 0.13
+      hardband 0.13 1.00
+      lyapweight 1.2 channel materials
+
+    rmaterials_substrate
+      safeband 0.0 0.10
+      goldband 0.10 0.13
+      hardband 0.13 1.00
+      lyapweight 1.0 channel materials
+
+    rcalib
+      safeband 0.0 0.00
+      goldband 0.00 0.04
+      hardband 0.13 1.00
+      lyapweight 0.8 channel dataquality
+
+  writepolicy
+    gate1_schema_from   EcoNetSchemaShard2026v1
+    gate2_rcalib_gold   rcalib <= 0.04
+    gate3_lane          lane == "RESEARCH"  -- This shard may only be RESEARCH
+
+  note Only substrates with rmaterials_substrate <= 0.13 (goldmax) are
+       considered for field deployment shards.
+end
