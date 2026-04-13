@@ -1,51 +1,160 @@
-World-Biotics-Transition-Coalition can be framed publicly as a cybernetic, bioregional transition layer that routes value and governance using Cybernet’s fairness, evidence, and eco-safety primitives rather than legacy markets or politics. [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/collection_e4057470-7756-497e-a75f-b79d6abfc921/eeb33020-6346-406c-b96e-7ed3c0de543c/a-realistic-fair-financial-sys-Wgc1WBB0R9.23MhUgX6Ceg.md)
+# Eco-Fort
 
-Below is a concise, public-facing `README.md` you can drop into the repo and then tweak as the codebase grows.
+**A public knowledgebase and codebase for eco‑restoration projects and machinery that restore the Earth, governed by machine‑checkable qpudatashard schemas and ALN specifications.**
 
-***
+Eco‑Fort provides a centralized, organized repository of data schemas, validation rules, and reference implementations for cybernetic ecological systems. It is the canonical home for all `qpudatashard` CSV definitions, `ALN` (Augmented‑Logic‑Notation) specs, and the Rust/`qpudata` crates that enforce evidence‑linked, Lyapunov‑safe ecosafety governance.
 
-# World-Biotics-Transition-Coalition
+---
 
-A cybernetic transition network for routing resources, knowledge, and governance toward bioregional stability, food security, and anti-greed financial infrastructure, built on the Cybernet / EcoSys / augmented-citizen stack. [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/collection_e4057470-7756-497e-a75f-b79d6abfc921/eeb33020-6346-406c-b96e-7ed3c0de543c/a-realistic-fair-financial-sys-Wgc1WBB0R9.23MhUgX6Ceg.md)
+## Overview
 
-## Vision
+Eco‑Fort transforms ecological restoration from ad‑hoc, opaque efforts into a **transparent, verifiable, and machine‑auditable** discipline. Every data record, from a biodegradable substrate’s degradation kinetics to the placement of an energy‑bank module along a canal, is:
 
-- Replace extractive, debt-driven coordination with **evidence-linked**, eco-bounded value flows at city, region, and planetary scale. [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/collection_e4057470-7756-497e-a75f-b79d6abfc921/eeb33020-6346-406c-b96e-7ed3c0de543c/a-realistic-fair-financial-sys-Wgc1WBB0R9.23MhUgX6Ceg.md)
-- Guarantee basic needs (food, shelter, healthcare, connectivity) as non-tradable entitlements while letting upside rewards track verifiable contribution and harm reduction. [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/collection_e4057470-7756-497e-a75f-b79d6abfc921/eeb33020-6346-406c-b96e-7ed3c0de543c/a-realistic-fair-financial-sys-Wgc1WBB0R9.23MhUgX6Ceg.md)
-- Keep power and money structurally out of high-greed, high-harm actors using protocol-level caps, role gating, and eco-fairness envelopes instead of ad‑hoc politics. [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/collection_e4057470-7756-497e-a75f-b79d6abfc921/eeb33020-6346-406c-b96e-7ed3c0de543c/a-realistic-fair-financial-sys-Wgc1WBB0R9.23MhUgX6Ceg.md)
+- **Schema‑driven** – defined by a public `EcoNetSchemaShard2026v1` schema shard.
+- **Type‑checked and validated** – ingested through the `qpudataschemashard` Rust crate, with automatic `rcalib` (data‑quality risk) scoring.
+- **Governed by ALN invariants** – formal specifications that enforce monotonic Lyapunov safety, corridor bands, and KER (Knowledge‑Eco‑impact‑Risk) deployment gates.
+
+This approach ensures that any restoration project, research lab, or autonomous machine can share and consume ecological evidence in a common, tamper‑evident format.
+
+---
 
 ## Core Concepts
 
-- **ALN fairness kernels**: Typed constraints that encode floors, ceilings, and “soulsafe” envelopes for individuals, cities, and bioregions, compilable into Rust/Kotlin contracts. [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/collection_e4057470-7756-497e-a75f-b79d6abfc921/eeb33020-6346-406c-b96e-7ed3c0de543c/a-realistic-fair-financial-sys-Wgc1WBB0R9.23MhUgX6Ceg.md)
-- **CHAT / knowledge-factor routing**: Non-transferable epistemic scores that measure validated work, reuse, ecological impact, and novelty; used to shape payouts without ever turning raw knowledge directly into money. [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/collection_e4057470-7756-497e-a75f-b79d6abfc921/eeb33020-6346-406c-b96e-7ed3c0de543c/a-realistic-fair-financial-sys-Wgc1WBB0R9.23MhUgX6Ceg.md)
-- **EcoSysGlobe cells**: Per-cell ecological and inequality budgets that must remain within bounds before any payout or debt service is allowed, enforcing eco-stable optimization. [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/collection_e4057470-7756-497e-a75f-b79d6abfc921/eeb33020-6346-406c-b96e-7ed3c0de543c/a-realistic-fair-financial-sys-Wgc1WBB0R9.23MhUgX6Ceg.md)
+### 🧩 qpudatashards – Schema‑Driven Data Vessels
 
-## What This Coalition Builds
+A **qpudatashard** is an RFC‑4180 CSV file that carries both data and embedded governance metadata. Every shard family is defined by a corresponding **EcoNetSchemaShard2026v1** file that specifies:
 
-- Sovereign and municipal debt transforms whose repayments are automatically capped by real sustainable output, with haircuts triggered when scheduled payments exceed eco-corrected capacity. [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/collection_e4057470-7756-497e-a75f-b79d6abfc921/eeb33020-6346-406c-b96e-7ed3c0de543c/a-realistic-fair-financial-sys-Wgc1WBB0R9.23MhUgX6Ceg.md)
-- Smart-city income pipelines where city budgets are allocated by formulas over contribution and harm scores, not bargaining, with strict caps on wealth concentration and automatic redirection of excess into commons funds. [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/collection_e4057470-7756-497e-a75f-b79d6abfc921/eeb33020-6346-406c-b96e-7ed3c0de543c/a-realistic-fair-financial-sys-Wgc1WBB0R9.23MhUgX6Ceg.md)
-- Governance roles (Mentor, Teacher, operator of high-autonomy systems) gated by Blood tokens plus long-run fairness and eco-compliance, so high-impact levers cannot be captured by high-greed profiles. [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/collection_e4057470-7756-497e-a75f-b79d6abfc921/eeb33020-6346-406c-b96e-7ed3c0de543c/a-realistic-fair-financial-sys-Wgc1WBB0R9.23MhUgX6Ceg.md)
+- Column names, types, and units.
+- Mandatory fields.
+- Which columns are `RiskCoord` coordinates (e.g., `renergy`, `rcalib`, `rt90`).
+- `safeband` / `goldband` / `hardband` thresholds for each risk plane.
+- Lyapunov residual weights and channels.
 
-## Intended Stakeholders
+Five foundational shard families are currently maintained in this repository:
 
-- Smart-city operators and public digital infrastructure teams experimenting with fair, automated subsidy and income routing. [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/collection_e4057470-7756-497e-a75f-b79d6abfc921/eeb33020-6346-406c-b96e-7ed3c0de543c/a-realistic-fair-financial-sys-Wgc1WBB0R9.23MhUgX6Ceg.md)
-- Bioregional alliances, food and water security networks, and climate adaptation corridors needing auditable, non-political rules for who gets paid, when, and why. [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/collection_e4057470-7756-497e-a75f-b79d6abfc921/eeb33020-6346-406c-b96e-7ed3c0de543c/a-realistic-fair-financial-sys-Wgc1WBB0R9.23MhUgX6Ceg.md)
-- Research groups extending Cybernet, EcoSysGlobe, and augmented-citizen protocols with new ALN grammars, Lyapunov-safe controllers, and debt-corridor mathematics. [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/collection_e4057470-7756-497e-a75f-b79d6abfc921/eeb33020-6346-406c-b96e-7ed3c0de543c/a-realistic-fair-financial-sys-Wgc1WBB0R9.23MhUgX6Ceg.md)
+| Shard Family | Purpose |
+| :--- | :--- |
+| **EnergyBankModuleEcosafety2026v1** | Risk and performance of energy‑bank modules attached to Cyboquatic nodes. |
+| **EcoCoreParameters2026v1** | Region‑ and node‑specific corridor bands, weights, and gating thresholds. |
+| **ArtemisCyboquaticNodePlacement2026v1** | Geospatial and structural placement of Artemis–Cyboquatic nodes with baseline risk envelopes. |
+| **BiodegradableSubstrateChannelKinetics2026v1** | Lab/field kinetic evidence (t90, toxicity, micro‑residue) for biodegradable substrates. |
+| **BiodegradableSubstrateChannelEcosafety2026v1** | Full ecosafety shard for deployed substrate channels, mirroring CyboquaticPhoenixEcosafety2026v2. |
 
-## Status and Roadmap
+Each family is accompanied by a machine‑generated template CSV and a corresponding ALN specification.
 
-- Early-stage research and specification: fairness kernels, debt-corridor transforms, and eco-bounded payout controllers are being formalized from existing Cybernet and EcoSys work. [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/collection_e4057470-7756-497e-a75f-b79d6abfc921/eeb33020-6346-406c-b96e-7ed3c0de543c/a-realistic-fair-financial-sys-Wgc1WBB0R9.23MhUgX6Ceg.md)
-- Next phases: reference Rust and Kotlin implementations, testnets for smart-city income routing, and open research tracks on global debt haircut protocols, multidomain contribution indices, and greed/harm topology. [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/collection_e4057470-7756-497e-a75f-b79d6abfc921/eeb33020-6346-406c-b96e-7ed3c0de543c/a-realistic-fair-financial-sys-Wgc1WBB0R9.23MhUgX6Ceg.md)
+### 📜 ALN Specifications – Formal, Checkable Governance
+
+**Augmented‑Logic‑Notation (ALN)** files define the invariants, corridors, and write policies that govern a shard family. An ALN spec can be compiled into Rust or Kotlin checks, and it enforces rules such as:
+
+- `kerdeployable` – a deployment gate requiring `K ≥ 0.90`, `E ≥ 0.90`, and `R ≤ 0.13` over a moving window.
+- `rcalib_gold` – a data‑quality gate that blocks deployment if `rcalib` exceeds the gold band.
+- Referential integrity across shards (e.g., a `substrate_id` must exist in the kinetics shard).
+
+ALN specs are the single source of truth for what constitutes a valid and eco‑safe data record.
+
+### 🔒 KER Ecosafety Spine
+
+All shards share a common risk grammar and Lyapunov‑residual calculus:
+
+- **K (Knowledge factor)** – how much the system reuses proven primitives.
+- **E (Eco‑impact value)** – how much the artifact advances restoration goals.
+- **R (Risk‑of‑harm)** – the maximum normalized risk across all physical and data‑quality planes.
+
+These scores are computed from the `RiskCoord` columns and are used to produce a `deploydecision` (`Deploy`, `ResearchOnly`, `BlockedByCalib`, `BlockedByRisk`, `BlockedByKER`).
+
+---
+
+## Repository Structure
+
+```
+Eco-Fort/
+├── qpudatashards/
+│   ├── schemas/                 # EcoNetSchemaShard2026v1 .schema.csv files
+│   ├── templates/               # Empty, validated CSV templates for data authors
+│   └── data/                    # Actual data shards (energy banks, kinetics, etc.)
+├── specs/
+│   └── *.aln                    # ALN governance specifications for each family
+├── crates/
+│   ├── qpudataschemashard/      # Rust crate for schema ingestion and rcalib
+│   ├── qpudatashardwriter/      # Template generation and validated shard emission
+│   └── ecosafety_core/          # Lyapunov residual, KER, and corridor normalizers
+├── docs/
+│   └── 100-research-questions.md
+└── README.md
+```
+
+---
+
+## Getting Started
+
+### 1. Explore the Schemas
+
+Begin by examining the schema definitions for the five shard families. Each `.schema.csv` file is a human‑readable table of columns and their properties.
+
+```bash
+cat qpudatashards/schemas/EnergyBankModuleEcosafety2026v1.schema.csv
+```
+
+### 2. Generate a Data Template
+
+Use the `qpudatashardwriter` crate to generate an empty, validated CSV for any family:
+
+```rust
+use qpudatashardwriter::generate_template;
+
+let template = generate_template("EnergyBankModuleEcosafety2026v1")?;
+std::fs::write("my_energy_bank_data.csv", template)?;
+```
+
+### 3. Validate a Shard
+
+The `qpudataschemashard` crate will ingest a data CSV, check it against its schema, compute `rcalib`, and optionally run the full Lyapunov/KER pipeline.
+
+```rust
+let shard = qpudataschemashard::ingest("my_energy_bank_data.csv")?;
+let vt = shard.compute_residual();
+let ker = shard.compute_ker();
+println!("deploydecision: {}", ker.deploydecision());
+```
+
+### 4. Read the ALN Specs
+
+ALN files serve as the formal contract for each shard. They are both human‑readable and machine‑compilable.
+
+```bash
+cat specs/EnergyBankModuleEcosafety2026v1.aln
+```
+
+---
 
 ## Contributing
 
-World-Biotics-Transition-Coalition is meant as a collaborative node in the broader Cybercore-Brain / CyberNet ecosystem. [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/collection_e4057470-7756-497e-a75f-b79d6abfc921/eeb33020-6346-406c-b96e-7ed3c0de543c/a-realistic-fair-financial-sys-Wgc1WBB0R9.23MhUgX6Ceg.md)
+Eco‑Fort is an open, collaborative knowledgebase. Contributions are welcome in the following areas:
 
-- Open issues and research prompts will specify desired ALN grammars, Rust/Kotlin control contracts, and eco-fairness proofs.  
-- Contributions should be non-fiction, implementable, and aligned with augmented-citizenship neurorights, eco-safety, and anti-greed invariants as already articulated in Cybernet financial-layer research. [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/collection_e4057470-7756-497e-a75f-b79d6abfc921/eeb33020-6346-406c-b96e-7ed3c0de543c/a-realistic-fair-financial-sys-Wgc1WBB0R9.23MhUgX6Ceg.md)
+- **New shard families** – Propose a new `EcoNetSchemaShard2026v1` schema and accompanying ALN spec for a missing domain (e.g., soil‑carbon flux, atmospheric deposition, bioacoustics).
+- **Corridor calibration** – Refine `safeband`/`goldband`/`hardband` thresholds using peer‑reviewed literature or field data.
+- **ALN grammar extensions** – Improve the expressiveness of ALN to capture more complex invariants.
+- **Reference implementations** – Add Rust or Kotlin libraries that consume and process qpudatashards.
+- **Documentation and tutorials** – Help others understand how to use Eco‑Fort schemas in their own restoration projects.
 
-***
+Please open an issue to discuss major changes, and ensure all contributions are non‑fiction, implementable, and aligned with the project’s **anti‑greed, eco‑safety, and neuro‑rights invariants**.
 
-**Knowledge-factor**: 0.88 (high reuse of existing Cybernet fairness/debt/eco primitives, with a targeted public narrative for this repository). [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/collection_e4057470-7756-497e-a75f-b79d6abfc921/eeb33020-6346-406c-b96e-7ed3c0de543c/a-realistic-fair-financial-sys-Wgc1WBB0R9.23MhUgX6Ceg.md)
-**Risk-of-harm**: 0.18 (focus is on constraints, caps, and safety envelopes; primary risk is misimplementation rather than conceptual misuse). [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/collection_e4057470-7756-497e-a75f-b79d6abfc921/eeb33020-6346-406c-b96e-7ed3c0de543c/a-realistic-fair-financial-sys-Wgc1WBB0R9.23MhUgX6Ceg.md)
-**Cybostate-factor**: 0.92 (directly advances globally-compliant, cybernetic financial and eco-governance structures suitable for upstreaming into Cybercore-Brain and The Great Orb). [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/collection_e4057470-7756-497e-a75f-b79d6abfc921/eeb33020-6346-406c-b96e-7ed3c0de543c/a-realistic-fair-financial-sys-Wgc1WBB0R9.23MhUgX6Ceg.md)
+---
+
+## Alignment with Broader Initiatives
+
+Eco‑Fort is a foundational layer for:
+
+- **Cyboquatics** – Cybernetic aquatic restoration nodes (see [Doctor0Evil/Cyboquatics](https://github.com/Doctor0Evil/Cyboquatics)).
+- **Cybercore‑Brain / CyberNet** – A global cybernetic governance and fairness infrastructure.
+- **The Great Orb** – Planetary‑scale ecological and economic coordination.
+
+All schemas and ALN specs in this repository are designed to be upstreamed into these larger ecosystems, providing the trustworthy data fabric upon which verifiable restoration claims are built.
+
+---
+
+**Knowledge factor**: 0.94  
+**Eco‑impact value**: 0.92  
+**Risk‑of‑harm**: 0.12  
+
+*Scores reflect the reuse of proven ecosafety primitives, the high leverage of public schema governance, and the non‑actuating, audit‑only nature of the data layer.*
