@@ -1,0 +1,46 @@
+spec EcoCoreParameters2026 v1.0.0
+  purpose  Governable corridor bands, weights, and gating thresholds for
+           each region and node family. Serves as the spine for all other
+           ecosafety shards in the Phoenix and Cyboquatic ecosystem.
+
+  requires EcoNetSchemaShard2026 v1.0.0
+  requires invariant kerdeployable v2.0.0
+
+  shardschema
+    path qpudatashards/corridors/EcoCoreParameters2026v1.csv
+    role CorridorSpine
+    fields
+      region_id            -- string, region/basin id
+      node_family          -- string, MAR|Canal|Tray|CyboquaticChannel|Wetland
+      corridor_varid       -- string, e.g. renergy, rhydraulic, rt90
+      safemin              -- float, safe band lower bound
+      safemax              -- float, safe band upper bound
+      goldmin              -- float, gold band lower bound
+      goldmax              -- float, gold band upper bound
+      hardmin              -- float, hard band lower bound
+      hardmax              -- float, hard band upper bound
+      norm_kind            -- string, linear|piecewise|log
+      units                -- string, physical units
+      direction            -- string, higher-is-worse|higher-is-better
+      lyapweight           -- float, weight in Lyapunov residual
+      lyapchannel          -- string, energy|hydraulics|biology|carbon|materials|dataquality
+      mandatory_corridor   -- boolean, true if required for deployment
+      profile              -- string, Research|Production
+      valid_from           -- datetime, start of validity
+      valid_to             -- datetime? end of validity
+      ker_profile          -- string, KER profile identifier
+      rcalib               -- RiskCoord, ingest-schema quality risk
+      dtdata               -- float, 1.0 - rcalib
+      evidencehex          -- hex64, evidence bundle hash
+      signinghex           -- hex64, Bostrom-aligned signing identity
+
+  writepolicy
+    gate1_schema_from   EcoNetSchemaShard2026v1
+    gate2_rcalib_gold   rcalib <= 0.04
+    gate3_ker_production
+      kmin  0.90
+      emin  0.90
+      rmax  0.13
+
+  note This shard is non-actuating; it defines the governance envelope.
+end
