@@ -1,0 +1,31 @@
+schemashardid,targetshardfamily,targetversion,colindex,colname,coltype,alnvarid,units,mandatory,isriskcoord,safeband,goldband,hardband,lyapweight,lyapchannel,rustsymbol,csymbol,description,citations
+BSK2026V1-SCHEMA-001,BiodegradableSubstrateChannelKinetics2026v1,1.0.0,0,substrate_id,String,,dimensionless,true,false,,,,,,substrate_id,substrate_id,Unique identifier for substrate formulation,econet-material-cybo
+BSK2026V1-SCHEMA-001,BiodegradableSubstrateChannelKinetics2026v1,1.0.0,1,channel_type,String,,dimensionless,true,false,,,,,,channel_type,channel_type,tray lining packed_bed wetland_medium,ecosafety-core-v2
+BSK2026V1-SCHEMA-001,BiodegradableSubstrateChannelKinetics2026v1,1.0.0,2,region_id,String,,dimensionless,true,false,,,,,,region_id,region_id,Region or basin identifier,ecosafety-core-v2
+BSK2026V1-SCHEMA-001,BiodegradableSubstrateChannelKinetics2026v1,1.0.0,3,test_id,String,,dimensionless,true,false,,,,,,test_id,test_id,Unique experiment or scenario identifier,econet-material-cybo
+BSK2026V1-SCHEMA-001,BiodegradableSubstrateChannelKinetics2026v1,1.0.0,4,lab_site,String,,dimensionless,true,false,,,,,,lab_site,lab_site,Lab or field site identifier,econet-material-cybo
+BSK2026V1-SCHEMA-001,BiodegradableSubstrateChannelKinetics2026v1,1.0.0,5,fluid_kind,String,,dimensionless,true,false,,,,,,fluid_kind,fluid_kind,wastewater canal_water stormwater,econet-material-cybo
+BSK2026V1-SCHEMA-001,BiodegradableSubstrateChannelKinetics2026v1,1.0.0,6,temp_c,Float,,degC,true,false,,,,,,temp_c,temp_c,Temperature during test degrees C,econet-material-cybo
+BSK2026V1-SCHEMA-001,BiodegradableSubstrateChannelKinetics2026v1,1.0.0,7,flow_regime,String,,dimensionless,true,false,,,,,,flow_regime,flow_regime,laminar transitional turbulent,econet-material-cybo
+BSK2026V1-SCHEMA-001,BiodegradableSubstrateChannelKinetics2026v1,1.0.0,8,t90_days,Float,,days,true,false,,,,,,t90_days,t90_days,Time to 90% mass loss under test conditions,econet-material-cybo
+BSK2026V1-SCHEMA-001,BiodegradableSubstrateChannelKinetics2026v1,1.0.0,9,mass_loss_fraction_90d,Float,,fraction,true,false,,,,,,mass_loss_fraction_90d,mass_loss_fraction_90d,Mass fraction lost after 90 days,econet-material-cybo
+BSK2026V1-SCHEMA-001,BiodegradableSubstrateChannelKinetics2026v1,1.0.0,10,leachate_chem_cec_mgL,Float,,mg/L,true,false,,,,,,leachate_chem_cec_mgL,leachate_chem_cec_mgL,Concentration of contaminants of emerging concern in leachate,econet-material-cybo
+BSK2026V1-SCHEMA-001,BiodegradableSubstrateChannelKinetics2026v1,1.0.0,11,leachate_pfas_ugL,Float,,ug/L,true,false,,,,,,leachate_pfas_ugL,leachate_pfas_ugL,PFAS concentration in leachate,econet-material-cybo
+BSK2026V1-SCHEMA-001,BiodegradableSubstrateChannelKinetics2026v1,1.0.0,12,micro_residue_count_per_L,Float,,count/L,true,false,,,,,,micro_residue_count_per_L,micro_residue_count_per_L,Micro‑residue particle count per liter,econet-material-cybo
+BSK2026V1-SCHEMA-001,BiodegradableSubstrateChannelKinetics2026v1,1.0.0,13,bulk_density_kgm3,Float,,kg/m3,true,false,,,,,,bulk_density_kgm3,bulk_density_kgm3,Bulk density of substrate,econet-material-cybo
+
+BSK2026V1-SCHEMA-001,BiodegradableSubstrateChannelKinetics2026v1,1.0.0,14,rt90,RiskCoord,rt90,dimensionless,true,true,0.0,0.10,0.13,1.0,4,rt90,rt90,Normalized risk from degradation time t90,econet-material-cybo
+BSK2026V1-SCHEMA-001,BiodegradableSubstrateChannelKinetics2026v1,1.0.0,15,rtox,RiskCoord,rtox,dimensionless,true,true,0.0,0.10,0.13,1.1,4,rtox,rtox,Normalized toxicity risk from leachate CEC/PFAS,econet-material-cybo
+BSK2026V1-SCHEMA-001,BiodegradableSubstrateChannelKinetics2026v1,1.0.0,16,rmicro,RiskCoord,rmicro,dimensionless,true,true,0.0,0.10,0.13,1.0,4,rmicro,rmicro,Normalized micro‑residue risk,econet-material-cybo
+BSK2026V1-SCHEMA-001,BiodegradableSubstrateChannelKinetics2026v1,1.0.0,17,rpfasresid,RiskCoord,rpfasresid,dimensionless,true,true,0.0,0.10,0.13,1.2,4,rpfasresid,rpfasresid,Normalized residual PFAS risk,econet-material-cybo
+BSK2026V1-SCHEMA-001,BiodegradableSubstrateChannelKinetics2026v1,1.0.0,18,rmaterials_substrate,RiskCoord,rmaterials_substrate,dimensionless,true,true,0.0,0.10,0.13,1.0,4,rmaterials_substrate,rmaterials_substrate,Composite materials risk for substrate,econet-material-cybo
+
+BSK2026V1-SCHEMA-001,BiodegradableSubstrateChannelKinetics2026v1,1.0.0,19,corridor_present,Boolean,,dimensionless,true,false,,,,,,corridor_present,corridor_present,True if all required corridors are referenced,ecosafety-core-v2
+BSK2026V1-SCHEMA-001,BiodegradableSubstrateChannelKinetics2026v1,1.0.0,20,rcalib,RiskCoord,rcalib,dimensionless,true,true,0.0,0.04,0.13,0.8,6,rcalib,rcalib,Ingest-schema quality risk coordinate 0-1,ecosafety-schema-rcalib
+BSK2026V1-SCHEMA-001,BiodegradableSubstrateChannelKinetics2026v1,1.0.0,21,vt_materials,Residual,,dimensionless,true,false,,,,,,vt_materials,vt_materials,Lyapunov residual for this experiment,ecosafety-core-v2
+BSK2026V1-SCHEMA-001,BiodegradableSubstrateChannelKinetics2026v1,1.0.0,22,kscore,Float,,dimensionless,true,false,,,,,,kscore,kscore,Knowledge factor K over experiment,ecosafety-core-v2
+BSK2026V1-SCHEMA-001,BiodegradableSubstrateChannelKinetics2026v1,1.0.0,23,escore,Float,,dimensionless,true,false,,,,,,escore,escore,Eco-impact factor E over experiment,ecosafety-core-v2
+BSK2026V1-SCHEMA-001,BiodegradableSubstrateChannelKinetics2026v1,1.0.0,24,rscore,Float,,dimensionless,true,false,,,,,,rscore,rscore,Risk-of-harm factor R over experiment,ecosafety-core-v2
+BSK2026V1-SCHEMA-001,BiodegradableSubstrateChannelKinetics2026v1,1.0.0,25,lane,String,,dimensionless,true,false,,,,,,lane,lane,Governance lane RESEARCH only,ecosafety-core-v2
+BSK2026V1-SCHEMA-001,BiodegradableSubstrateChannelKinetics2026v1,1.0.0,26,evidencehex,Hex64,,hex,true,false,,,,,,evidencehex,evidencehex,64-char hex evidence hash for this shard instance,ecosafety-core-v2
+BSK2026V1-SCHEMA-001,BiodegradableSubstrateChannelKinetics2026v1,1.0.0,27,signinghex,Hex64,,hex,true,false,,,,,,signinghex,signinghex,64-char hex signing hash Bostrom-linked identity,ecosafety-core-v2
