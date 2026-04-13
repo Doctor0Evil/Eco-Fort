@@ -1,0 +1,93 @@
+spec ArtemisCyboquaticNodePlacement2026 v1.0.0
+  purpose  Geospatial and structural placement of Artemis–Cyboquatic nodes,
+           with design‑time risk envelopes computed from long‑horizon CEIM
+           projections and materials kernels. Non‑actuating; gates placement
+           decisions.
+
+  requires EcoNetSchemaShard2026 v1.0.0
+  requires invariant kerdeployable v2.0.0
+  requires CyboquaticEcosafetyCoreV2
+
+  shardschema
+    path qpudatashards/placements/ArtemisCyboquaticNodePlacement2026v1.csv
+    role NodePlacementDesign
+    fields
+      nodeid                -- string, unique node identifier
+      artemis_lane          -- string, HYDRO_SUBSTRATE|AIR_GLOBE|TRAY|WETLAND
+      region_id             -- string, region/basin
+      basin_id              -- string, sub‑basin
+      lat_deg               -- float, latitude
+      lon_deg               -- float, longitude
+      elev_m                -- float, elevation
+      host_infra_id         -- string?, infrastructure reference
+      depth_m               -- float, placement depth
+      offset_from_bank_m    -- float?, offset from bank
+      channel_type          -- string, open|closed|porous
+      substrate_channel_id  -- string?, substrate reference
+      design_discharge_m3s  -- float?, design flow rate
+
+      renergy_design        -- RiskCoord, energy plane
+      rhydraulic_design     -- RiskCoord, hydraulic plane
+      rbiology_design       -- RiskCoord, biology plane
+      rcarbon_design        -- RiskCoord, carbon plane
+      rmaterials_design     -- RiskCoord, materials plane
+
+      logical_qubit_lane    -- string?, qubit lane binding
+      roh_qubit_plane       -- float?, baseline RoH
+
+      rcalib                -- RiskCoord, ingest‑schema quality
+      vt_design             -- Residual, Lyapunov residual
+      kscore_design         -- float, K at design time
+      escore_design         -- float, E at design time
+      rscore_design         -- float, R at design time
+      lane                  -- string, RESEARCH|PRODUCTION
+      evidencehex           -- hex64, evidence hash
+      signinghex            -- hex64, signing identity
+
+  corridors
+    renergy_design
+      safeband 0.0 0.08
+      goldband 0.08 0.13
+      hardband 0.13 1.00
+      lyapweight 1.0 channel energy
+
+    rhydraulic_design
+      safeband 0.0 0.08
+      goldband 0.08 0.13
+      hardband 0.13 1.00
+      lyapweight 1.2 channel hydraulics
+
+    rbiology_design
+      safeband 0.0 0.08
+      goldband 0.08 0.13
+      hardband 0.13 1.00
+      lyapweight 1.0 channel biology
+
+    rcarbon_design
+      safeband 0.0 0.08
+      goldband 0.08 0.13
+      hardband 0.13 1.00
+      lyapweight 1.3 channel carbon
+
+    rmaterials_design
+      safeband 0.0 0.08
+      goldband 0.08 0.13
+      hardband 0.13 1.00
+      lyapweight 1.1 channel materials
+
+    rcalib
+      safeband 0.0 0.00
+      goldband 0.00 0.04
+      hardband 0.13 1.00
+      lyapweight 0.8 channel dataquality
+
+  writepolicy
+    gate1_schema_from   EcoNetSchemaShard2026v1
+    gate2_rcalib_gold   rcalib <= 0.04
+    gate3_ker_production
+      kmin  0.90
+      emin  0.90
+      rmax  0.13
+
+  note All design‑time risk coordinates must be ≤ goldmax to proceed.
+end
