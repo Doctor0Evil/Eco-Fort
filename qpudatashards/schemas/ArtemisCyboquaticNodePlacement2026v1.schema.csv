@@ -1,0 +1,29 @@
+schemashardid,targetshardfamily,targetversion,colindex,colname,coltype,alnvarid,units,mandatory,isriskcoord,safeband,goldband,hardband,lyapweight,lyapchannel,rustsymbol,csymbol,description,citations
+ACN2026V1-SCHEMA-001,ArtemisCyboquaticNodePlacement2026v1,1.0.0,0,nodeid,String,,dimensionless,true,false,,,,,,nodeid,nodeid,Unique Cyboquatic node identifier,ecosafety-core-v2
+ACN2026V1-SCHEMA-001,ArtemisCyboquaticNodePlacement2026v1,1.0.0,1,artemis_lane,String,,dimensionless,true,false,,,,,,artemis_lane,artemis_lane,Artemis lane HYDRO_SUBSTRATE AIR_GLOBE TRAY WETLAND,artemis-core-v1
+ACN2026V1-SCHEMA-001,ArtemisCyboquaticNodePlacement2026v1,1.0.0,2,region_id,String,,dimensionless,true,false,,,,,,region_id,region_id,Region or basin identifier e.g. Phoenix-AZ,ecosafety-core-v2
+ACN2026V1-SCHEMA-001,ArtemisCyboquaticNodePlacement2026v1,1.0.0,3,basin_id,String,,dimensionless,true,false,,,,,,basin_id,basin_id,Sub-basin or watershed identifier,ecosafety-core-v2
+ACN2026V1-SCHEMA-001,ArtemisCyboquaticNodePlacement2026v1,1.0.0,4,lat_deg,Float,,degrees,true,false,,,,,,lat_deg,lat_deg,Latitude WGS84,ceim-geospatial
+ACN2026V1-SCHEMA-001,ArtemisCyboquaticNodePlacement2026v1,1.0.0,5,lon_deg,Float,,degrees,true,false,,,,,,lon_deg,lon_deg,Longitude WGS84,ceim-geospatial
+ACN2026V1-SCHEMA-001,ArtemisCyboquaticNodePlacement2026v1,1.0.0,6,elev_m,Float,,meters,true,false,,,,,,elev_m,elev_m,Elevation above mean sea level,ceim-geospatial
+ACN2026V1-SCHEMA-001,ArtemisCyboquaticNodePlacement2026v1,1.0.0,7,host_infra_id,String,,dimensionless,false,false,,,,,,host_infra_id,host_infra_id,Reference to host infrastructure e.g. canal reach or vault ID,ecosafety-core-v2
+ACN2026V1-SCHEMA-001,ArtemisCyboquaticNodePlacement2026v1,1.0.0,8,depth_m,Float,,meters,true,false,,,,,,depth_m,depth_m,Placement depth below reference surface,ecosafety-core-v2
+ACN2026V1-SCHEMA-001,ArtemisCyboquaticNodePlacement2026v1,1.0.0,9,offset_from_bank_m,Float,,meters,false,false,,,,,,offset_from_bank_m,offset_from_bank_m,Horizontal offset from canal bank or water edge,ecosafety-core-v2
+ACN2026V1-SCHEMA-001,ArtemisCyboquaticNodePlacement2026v1,1.0.0,10,channel_type,String,,dimensionless,true,false,,,,,,channel_type,channel_type,open closed porous,ecosafety-core-v2
+ACN2026V1-SCHEMA-001,ArtemisCyboquaticNodePlacement2026v1,1.0.0,11,substrate_channel_id,String,,dimensionless,false,false,,,,,,substrate_channel_id,substrate_channel_id,Reference to biodegradable substrate shard if applicable,ecosafety-core-v2
+ACN2026V1-SCHEMA-001,ArtemisCyboquaticNodePlacement2026v1,1.0.0,12,design_discharge_m3s,Float,,m3/s,false,false,,,,,,design_discharge_m3s,design_discharge_m3s,Design flow rate through channel,ecosafety-core-v2
+ACN2026V1-SCHEMA-001,ArtemisCyboquaticNodePlacement2026v1,1.0.0,13,renergy_design,RiskCoord,renergy,dimensionless,true,true,0.0,0.08,0.13,1.0,0,renergy_design,renergy_design,Design-time energy-plane risk 0-1,ecosafety-core-v2
+ACN2026V1-SCHEMA-001,ArtemisCyboquaticNodePlacement2026v1,1.0.0,14,rhydraulic_design,RiskCoord,rhydraulic,dimensionless,true,true,0.0,0.08,0.13,1.2,1,rhydraulic_design,rhydraulic_design,Design-time hydraulic-plane risk 0-1,ecosafety-core-v2
+ACN2026V1-SCHEMA-001,ArtemisCyboquaticNodePlacement2026v1,1.0.0,15,rbiology_design,RiskCoord,rbiology,dimensionless,true,true,0.0,0.08,0.13,1.0,2,rbiology_design,rbiology_design,Design-time biology-plane risk 0-1,ecosafety-core-v2
+ACN2026V1-SCHEMA-001,ArtemisCyboquaticNodePlacement2026v1,1.0.0,16,rcarbon_design,RiskCoord,rcarbon,dimensionless,true,true,0.0,0.08,0.13,1.3,3,rcarbon_design,rcarbon_design,Design-time carbon-plane risk 0-1,ceim-energy-mass
+ACN2026V1-SCHEMA-001,ArtemisCyboquaticNodePlacement2026v1,1.0.0,17,rmaterials_design,RiskCoord,rmaterials,dimensionless,true,true,0.0,0.08,0.13,1.1,4,rmaterials_design,rmaterials_design,Design-time materials-plane risk 0-1,econet-material-cybo
+ACN2026V1-SCHEMA-001,ArtemisCyboquaticNodePlacement2026v1,1.0.0,18,logical_qubit_lane,String,,dimensionless,false,false,,,,,,logical_qubit_lane,logical_qubit_lane,Artemis logical qubit lane binding,artemis-core-v1
+ACN2026V1-SCHEMA-001,ArtemisCyboquaticNodePlacement2026v1,1.0.0,19,roh_qubit_plane,Float,,dimensionless,false,false,,,,,,roh_qubit_plane,roh_qubit_plane,Baseline Risk-of-Harm for logical map,artemis-core-v1
+ACN2026V1-SCHEMA-001,ArtemisCyboquaticNodePlacement2026v1,1.0.0,20,rcalib,RiskCoord,rcalib,dimensionless,true,true,0.0,0.04,0.13,0.8,6,rcalib,rcalib,Ingest-schema quality risk coordinate 0-1,ecosafety-schema-rcalib
+ACN2026V1-SCHEMA-001,ArtemisCyboquaticNodePlacement2026v1,1.0.0,21,vt_design,Residual,,dimensionless,true,false,,,,,,vt_design,vt_design,Lyapunov residual for design envelope,ecosafety-core-v2
+ACN2026V1-SCHEMA-001,ArtemisCyboquaticNodePlacement2026v1,1.0.0,22,kscore_design,Float,,dimensionless,true,false,,,,,,kscore_design,kscore_design,Design-phase knowledge factor K,ecosafety-core-v2
+ACN2026V1-SCHEMA-001,ArtemisCyboquaticNodePlacement2026v1,1.0.0,23,escore_design,Float,,dimensionless,true,false,,,,,,escore_design,escore_design,Design-phase eco-impact factor E,ecosafety-core-v2
+ACN2026V1-SCHEMA-001,ArtemisCyboquaticNodePlacement2026v1,1.0.0,24,rscore_design,Float,,dimensionless,true,false,,,,,,rscore_design,rscore_design,Design-phase risk-of-harm R,ecosafety-core-v2
+ACN2026V1-SCHEMA-001,ArtemisCyboquaticNodePlacement2026v1,1.0.0,25,lane,String,,dimensionless,true,false,,,,,,lane,lane,Governance lane RESEARCH or PRODUCTION,ecosafety-core-v2
+ACN2026V1-SCHEMA-001,ArtemisCyboquaticNodePlacement2026v1,1.0.0,26,evidencehex,Hex64,,hex,true,false,,,,,,evidencehex,evidencehex,64-char hex evidence hash for this shard instance,ecosafety-core-v2
+ACN2026V1-SCHEMA-001,ArtemisCyboquaticNodePlacement2026v1,1.0.0,27,signinghex,Hex64,,hex,true,false,,,,,,signinghex,signinghex,64-char hex signing hash Bostrom-linked identity,ecosafety-core-v2
