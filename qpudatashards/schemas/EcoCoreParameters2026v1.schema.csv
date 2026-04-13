@@ -1,0 +1,24 @@
+schemashardid,targetshardfamily,targetversion,colindex,colname,coltype,alnvarid,units,mandatory,isriskcoord,safeband,goldband,hardband,lyapweight,lyapchannel,rustsymbol,csymbol,description,citations
+ECP2026V1-SCHEMA-001,EcoCoreParameters2026v1,1.0.0,0,region_id,String,,dimensionless,true,false,,,,,,region_id,region_id,Region or basin identifier e.g. Phoenix-AZ,ecosafety-core-v2
+ECP2026V1-SCHEMA-001,EcoCoreParameters2026v1,1.0.0,1,node_family,String,,dimensionless,true,false,,,,,,node_family,node_family,Node class MAR Canal Tray CyboquaticChannel Wetland,ecosafety-core-v2
+ECP2026V1-SCHEMA-001,EcoCoreParameters2026v1,1.0.0,2,corridor_varid,String,,dimensionless,true,false,,,,,,corridor_varid,corridor_varid,Canonical risk variable identifier e.g. renergy rhydraulic,ecosafety-core-v2
+ECP2026V1-SCHEMA-001,EcoCoreParameters2026v1,1.0.0,3,safemin,Float,,varies,true,false,,,,,,safemin,safemin,Lower bound of safe band in physical units,ecosafety-core-v2
+ECP2026V1-SCHEMA-001,EcoCoreParameters2026v1,1.0.0,4,safemax,Float,,varies,true,false,,,,,,safemax,safemax,Upper bound of safe band in physical units,ecosafety-core-v2
+ECP2026V1-SCHEMA-001,EcoCoreParameters2026v1,1.0.0,5,goldmin,Float,,varies,true,false,,,,,,goldmin,goldmin,Lower bound of gold band in physical units,ecosafety-core-v2
+ECP2026V1-SCHEMA-001,EcoCoreParameters2026v1,1.0.0,6,goldmax,Float,,varies,true,false,,,,,,goldmax,goldmax,Upper bound of gold band in physical units,ecosafety-core-v2
+ECP2026V1-SCHEMA-001,EcoCoreParameters2026v1,1.0.0,7,hardmin,Float,,varies,true,false,,,,,,hardmin,hardmin,Lower bound of hard band in physical units,ecosafety-core-v2
+ECP2026V1-SCHEMA-001,EcoCoreParameters2026v1,1.0.0,8,hardmax,Float,,varies,true,false,,,,,,hardmax,hardmax,Upper bound of hard band in physical units,ecosafety-core-v2
+ECP2026V1-SCHEMA-001,EcoCoreParameters2026v1,1.0.0,9,norm_kind,String,,dimensionless,true,false,,,,,,norm_kind,norm_kind,Normalization method linear piecewise log,ecosafety-core-v2
+ECP2026V1-SCHEMA-001,EcoCoreParameters2026v1,1.0.0,10,units,String,,dimensionless,true,false,,,,,,units,units,Physical units of the variable,ecosafety-core-v2
+ECP2026V1-SCHEMA-001,EcoCoreParameters2026v1,1.0.0,11,direction,String,,dimensionless,true,false,,,,,,direction,direction,higher-is-worse or higher-is-better,ecosafety-core-v2
+ECP2026V1-SCHEMA-001,EcoCoreParameters2026v1,1.0.0,12,lyapweight,Float,,dimensionless,true,false,,,,,,lyapweight,lyapweight,Weight coefficient for Lyapunov residual Vt,ecosafety-core-v2
+ECP2026V1-SCHEMA-001,EcoCoreParameters2026v1,1.0.0,13,lyapchannel,String,,dimensionless,true,false,,,,,,lyapchannel,lyapchannel,Residual channel energy hydraulics biology carbon materials dataquality,ecosafety-core-v2
+ECP2026V1-SCHEMA-001,EcoCoreParameters2026v1,1.0.0,14,mandatory_corridor,Boolean,,dimensionless,true,false,,,,,,mandatory_corridor,mandatory_corridor,True if this corridor must exist for deployment,ecosafety-core-v2
+ECP2026V1-SCHEMA-001,EcoCoreParameters2026v1,1.0.0,15,profile,String,,dimensionless,true,false,,,,,,profile,profile,Research or Production profile,ecosafety-core-v2
+ECP2026V1-SCHEMA-001,EcoCoreParameters2026v1,1.0.0,16,valid_from,DateTime,,UTC,true,false,,,,,,valid_from,valid_from,ISO 8601 start of validity,ecosafety-core-v2
+ECP2026V1-SCHEMA-001,EcoCoreParameters2026v1,1.0.0,17,valid_to,DateTime,,UTC,false,false,,,,,,valid_to,valid_to,ISO 8601 end of validity null for indefinite,ecosafety-core-v2
+ECP2026V1-SCHEMA-001,EcoCoreParameters2026v1,1.0.0,18,ker_profile,String,,dimensionless,true,false,,,,,,ker_profile,ker_profile,Identifier of KER profile e.g. PhoenixSpine2026v1,ecosafety-core-v2
+ECP2026V1-SCHEMA-001,EcoCoreParameters2026v1,1.0.0,19,rcalib,RiskCoord,rcalib,dimensionless,true,true,0.0,0.04,0.13,0.8,6,rcalib,rcalib,Ingest-schema quality risk coordinate 0-1,ecosafety-schema-rcalib
+ECP2026V1-SCHEMA-001,EcoCoreParameters2026v1,1.0.0,20,dtdata,Float,,dimensionless,true,false,,,,,,dtdata,dtdata,Data trust discount 1.0 - rcalib,schema-shard-v1
+ECP2026V1-SCHEMA-001,EcoCoreParameters2026v1,1.0.0,21,evidencehex,Hex64,,hex,true,false,,,,,,evidencehex,evidencehex,64-char hex evidence hash for this shard instance,ecosafety-core-v2
+ECP2026V1-SCHEMA-001,EcoCoreParameters2026v1,1.0.0,22,signinghex,Hex64,,hex,true,false,,,,,,signinghex,signinghex,64-char hex signing hash Bostrom-linked identity,ecosafety-core-v2
