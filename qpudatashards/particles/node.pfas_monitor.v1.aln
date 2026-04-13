@@ -1,0 +1,15 @@
+-- file: qpudatashards/particles/node.pfas_monitor.v1.aln
+use template.timeseries.v1
+
+aln particle node.pfas_monitor.v1
+  field nodeid     string       -- from template
+  field timestamp  timestamp
+  field rcalib01   f64
+  field medium     string
+  field schema_tag string
+
+  field substrate_id        string?
+  field rpfasresid_channel  f64?
+  field rtox01              f64
+  field citations           string  -- see Q15
+end
