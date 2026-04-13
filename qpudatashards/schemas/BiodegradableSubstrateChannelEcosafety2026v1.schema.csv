@@ -1,0 +1,32 @@
+schemashardid,targetshardfamily,targetversion,colindex,colname,coltype,alnvarid,units,mandatory,isriskcoord,safeband,goldband,hardband,lyapweight,lyapchannel,rustsymbol,csymbol,description,citations
+BSE2026V1-SCHEMA-001,BiodegradableSubstrateChannelEcosafety2026v1,1.0.0,0,nodeid,String,,dimensionless,true,false,,,,,,nodeid,nodeid,Unique Cyboquatic node identifier,ecosafety-core-v2
+BSE2026V1-SCHEMA-001,BiodegradableSubstrateChannelEcosafety2026v1,1.0.0,1,channel_id,String,,dimensionless,true,false,,,,,,channel_id,channel_id,Identifier of the substrate‑bearing channel,ecosafety-core-v2
+BSE2026V1-SCHEMA-001,BiodegradableSubstrateChannelEcosafety2026v1,1.0.0,2,substrate_id,String,,dimensionless,true,false,,,,,,substrate_id,substrate_id,Reference to substrate formulation ID,ecosafety-core-v2
+BSE2026V1-SCHEMA-001,BiodegradableSubstrateChannelEcosafety2026v1,1.0.0,3,region_id,String,,dimensionless,true,false,,,,,,region_id,region_id,Region or basin identifier,ecosafety-core-v2
+BSE2026V1-SCHEMA-001,BiodegradableSubstrateChannelEcosafety2026v1,1.0.0,4,basin_id,String,,dimensionless,true,false,,,,,,basin_id,basin_id,Sub-basin or watershed identifier,ecosafety-core-v2
+BSE2026V1-SCHEMA-001,BiodegradableSubstrateChannelEcosafety2026v1,1.0.0,5,timestamp,DateTime,,UTC,true,false,,,,,,timestamp,timestamp,ISO 8601 UTC observation window timestamp,ecosafety-core-v2
+
+BSE2026V1-SCHEMA-001,BiodegradableSubstrateChannelEcosafety2026v1,1.0.0,6,renergy,RiskCoord,renergy,dimensionless,true,true,0.0,0.10,0.13,1.0,0,renergy,renergy,Normalized energy-plane risk 0-1,ecosafety-core-v2
+BSE2026V1-SCHEMA-001,BiodegradableSubstrateChannelEcosafety2026v1,1.0.0,7,rhydraulic,RiskCoord,rhydraulic,dimensionless,true,true,0.0,0.10,0.13,1.2,1,rhydraulic,rhydraulic,Normalized hydraulic-plane risk 0-1,ecosafety-core-v2
+BSE2026V1-SCHEMA-001,BiodegradableSubstrateChannelEcosafety2026v1,1.0.0,8,rbiology,RiskCoord,rbiology,dimensionless,true,true,0.0,0.10,0.13,1.0,2,rbiology,rbiology,Normalized biology-plane risk 0-1,ecosafety-core-v2
+BSE2026V1-SCHEMA-001,BiodegradableSubstrateChannelEcosafety2026v1,1.0.0,9,rcarbon,RiskCoord,rcarbon,dimensionless,true,true,0.0,0.10,0.13,1.3,3,rcarbon,rcarbon,Normalized carbon-plane risk 0-1,ceim-energy-mass
+BSE2026V1-SCHEMA-001,BiodegradableSubstrateChannelEcosafety2026v1,1.0.0,10,rmaterials,RiskCoord,rmaterials,dimensionless,true,true,0.0,0.10,0.13,1.1,4,rmaterials,rmaterials,Normalized materials-plane risk 0-1,econet-material-cybo
+BSE2026V1-SCHEMA-001,BiodegradableSubstrateChannelEcosafety2026v1,1.0.0,11,rbiodiversity,RiskCoord,rbiodiversity,dimensionless,true,true,0.0,0.10,0.13,1.0,2,rbiodiversity,rbiodiversity,Normalized biodiversity-plane risk 0-1,ecosafety-core-v2
+BSE2026V1-SCHEMA-001,BiodegradableSubstrateChannelEcosafety2026v1,1.0.0,12,rpfasresid_channel,RiskCoord,rpfasresid_channel,dimensionless,true,true,0.0,0.10,0.13,1.2,4,rpfasresid_channel,rpfasresid_channel,Normalized PFAS residence risk for channel,ecosafety-core-v2
+
+BSE2026V1-SCHEMA-001,BiodegradableSubstrateChannelEcosafety2026v1,1.0.0,13,rsigma_energy,RiskCoord,rsigma_energy,dimensionless,true,true,0.0,0.10,0.30,0.9,5,rsigma_energy,rsigma_energy,Sensor uncertainty risk for telemetry,ecosafety-core-v2
+BSE2026V1-SCHEMA-001,BiodegradableSubstrateChannelEcosafety2026v1,1.0.0,14,rcalib,RiskCoord,rcalib,dimensionless,true,true,0.0,0.04,0.13,0.8,6,rcalib,rcalib,Ingest-schema quality risk coordinate 0-1,ecosafety-schema-rcalib
+
+BSE2026V1-SCHEMA-001,BiodegradableSubstrateChannelEcosafety2026v1,1.0.0,15,vt,Residual,,dimensionless,true,false,,,,,,vt,vt,Lyapunov residual including wcalib term,ecosafety-core-v2
+BSE2026V1-SCHEMA-001,BiodegradableSubstrateChannelEcosafety2026v1,1.0.0,16,kscore,Float,,dimensionless,true,false,,,,,,kscore,kscore,Knowledge factor K over ecosafety window,ecosafety-core-v2
+BSE2026V1-SCHEMA-001,BiodegradableSubstrateChannelEcosafety2026v1,1.0.0,17,escore,Float,,dimensionless,true,false,,,,,,escore,escore,Eco-impact factor E over ecosafety window,ecosafety-core-v2
+BSE2026V1-SCHEMA-001,BiodegradableSubstrateChannelEcosafety2026v1,1.0.0,18,rscore,Float,,dimensionless,true,false,,,,,,rscore,rscore,Risk-of-harm factor R over ecosafety window,ecosafety-core-v2
+BSE2026V1-SCHEMA-001,BiodegradableSubstrateChannelEcosafety2026v1,1.0.0,19,dtsensor,Float,,dimensionless,true,false,,,,,,dtsensor,dtsensor,Sensor trust scalar Dt from rsigma plane,ecosafety-core-v2
+BSE2026V1-SCHEMA-001,BiodegradableSubstrateChannelEcosafety2026v1,1.0.0,20,dtdata,Float,,dimensionless,true,false,,,,,,dtdata,dtdata,Data trust discount 1.0 - rcalib,schema-shard-v1
+BSE2026V1-SCHEMA-001,BiodegradableSubstrateChannelEcosafety2026v1,1.0.0,21,kadj,Float,,dimensionless,true,false,,,,,,kadj,kadj,Trust-adjusted knowledge factor K * Dsensor * Dtdata,ecosafety-core-v2
+BSE2026V1-SCHEMA-001,BiodegradableSubstrateChannelEcosafety2026v1,1.0.0,22,eadj,Float,,dimensionless,true,false,,,,,,eadj,eadj,Trust-adjusted eco-impact factor E * Dsensor * Dtdata,ecosafety-core-v2
+
+BSE2026V1-SCHEMA-001,BiodegradableSubstrateChannelEcosafety2026v1,1.0.0,23,deploydecision,String,,dimensionless,true,false,,,,,,deploydecision,deploydecision,Deployment decision Deploy ResearchOnly BlockedByCalib BlockedByRisk BlockedByKER,ecosafety-core-v2
+BSE2026V1-SCHEMA-001,BiodegradableSubstrateChannelEcosafety2026v1,1.0.0,24,lane,String,,dimensionless,true,false,,,,,,lane,lane,Governance lane RESEARCH or PRODUCTION,ecosafety-core-v2
+BSE2026V1-SCHEMA-001,BiodegradableSubstrateChannelEcosafety2026v1,1.0.0,25,evidencehex,Hex64,,hex,true,false,,,,,,evidencehex,evidencehex,64-char hex evidence hash for this shard instance,ecosafety-core-v2
+BSE2026V1-SCHEMA-001,BiodegradableSubstrateChannelEcosafety2026v1,1.0.0,26,signinghex,Hex64,,hex,true,false,,,,,,signinghex,signinghex,64-char hex signing hash Bostrom-linked identity,ecosafety-core-v2
