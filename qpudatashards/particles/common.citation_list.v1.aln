@@ -1,0 +1,11 @@
+-- file: qpudatashards/particles/common.citation_list.v1.aln
+aln particle common.citation_entry.v1
+  field cite_id     string   -- local short ID, e.g. "OECD308:PHX:2026"
+  field doi         string?  -- e.g. "10.1039/C5EM00379E"
+  field url         string?  -- canonical URL if no DOI
+  field title       string
+  field authors     string
+  field year        u32
+  field version     string   -- e.g. "v1.0", "corrigendum-2025"
+  field access_date string   -- ISO8601 date when integrated
+end
