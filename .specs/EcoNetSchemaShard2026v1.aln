@@ -1,0 +1,101 @@
+aln alnspec v1.0 EcoNetSchemaShard2026v1
+version 1.0.0
+network ALN-MAINNET
+shardid 0xa7c3d9b2e4f10596c3ad81fe27b4c6d1
+producer.bostrom bostrom18sd2ujv24ual9c9pshtxys6j8knh6xaead9ye7
+timestamp.utc 2026-04-14T00:00:00Z
+
+meta
+  description Canonical 2026 ecosafety schema registry binding cyboquatic, energy, and governance qpudatashards for Eco‑Fort; schemas mirror CSV headers in qpudatashards/schemas/ and are add-only.
+end
+
+enum ColumnType2026v1
+  String
+  Int
+  Float
+  DateTime
+  RiskCoord
+  Residual
+  Hex64
+  Boolean
+end
+
+record ColumnSchema2026v1
+  string schemashardid
+  string targetshardfamily
+  string targetversion
+  int    colindex
+  string colname
+  ColumnType2026v1 coltype
+  string alnvarid
+  string units
+  bool   mandatory
+  bool   isriskcoord
+  float  safeband_min
+  float  safeband_max
+  float  goldband_min
+  float  goldband_max
+  float  hardband_min
+  float  hardband_max
+  float  lyapweight
+  int    lyapchannel
+  string rustsymbol
+  string csymbol
+  string description
+end
+
+record ShardFamilySpec2026v1
+  string familyid
+  string csvpath
+  string schemapath
+  string lane_default
+end
+
+record SchemaShardRegistry2026v1
+  ShardFamilySpec2026v1[] families
+end
+
+SchemaShardRegistry2026v1
+  families [
+    { familyid "EnergyBankModuleEcosafety2026v1"
+    , csvpath "qpudatashards/ecosafety/EnergyBankModuleEcosafety2026v1.csv"
+    , schemapath "qpudatashards/schemas/EnergyBankModuleEcosafety2026v1.schema.csv"
+    , lane_default "MONITOR"
+    }
+    { familyid "EcoCoreParameters2026v1"
+    , csvpath "qpudatashards/governance/EcoCoreParameters2026v1.csv"
+    , schemapath "qpudatashards/schemas/EcoCoreParameters2026v1.schema.csv"
+    , lane_default "GOV"
+    }
+    { familyid "ArtemisCyboquaticNodePlacement2026v1"
+    , csvpath "qpudatashards/placements/ArtemisCyboquaticNodePlacement2026v1.csv"
+    , schemapath "qpudatashards/schemas/ArtemisCyboquaticNodePlacement2026v1.schema.csv"
+    , lane_default "DESIGN"
+    }
+    { familyid "BiodegradableSubstrateChannelKinetics2026v1"
+    , csvpath "qpudatashards/kinetics/BiodegradableSubstrateChannelKinetics2026v1.csv"
+    , schemapath "qpudatashards/schemas/BiodegradableSubstrateChannelKinetics2026v1.schema.csv"
+    , lane_default "RESEARCH"
+    }
+    { familyid "BiodegradableSubstrateChannelEcosafety2026v1"
+    , csvpath "qpudatashards/ecosafety/BiodegradableSubstrateChannelEcosafety2026v1.csv"
+    , schemapath "qpudatashards/schemas/BiodegradableSubstrateChannelEcosafety2026v1.schema.csv"
+    , lane_default "MONITOR"
+    }
+    { familyid "SubstrateFlowDegradationKinetics2026v1"
+    , csvpath "qpudatashards/kinetics/SubstrateFlowDegradationKinetics2026v1.csv"
+    , schemapath "qpudatashards/schemas/SubstrateFlowDegradationKinetics2026v1.schema.csv"
+    , lane_default "RESEARCH"
+    }
+    { familyid "AcceleratedAgingTranslation2026v1"
+    , csvpath "qpudatashards/translation/AcceleratedAgingTranslation2026v1.csv"
+    , schemapath "qpudatashards/schemas/AcceleratedAgingTranslation2026v1.schema.csv"
+    , lane_default "RESEARCH"
+    }
+    { familyid "BatteryMaterialEcosafetyHardGates2026v1"
+    , csvpath "qpudatashards/battery/BatteryMaterialEcosafetyHardGates2026v1.csv"
+    , schemapath "qpudatashards/schemas/BatteryMaterialEcosafetyHardGates2026v1.schema.csv"
+    , lane_default "PROD_GOV"
+    }
+  ]
+end
