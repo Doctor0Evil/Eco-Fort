@@ -1,0 +1,139 @@
+spec CyboquaticCarbonMaterialMachine2026 v1.0.0
+
+shardschema path qpudatashards/CyboquaticCarbonMaterialMachine2026v1.csv
+role MachineInstance
+fields
+  machine_id,
+  node_class,
+  location_id,
+  // carbon plane inputs & metrics
+  net_kg_co2e_per_cycle,
+  cycles_per_year,
+  r_carbon,
+  // material kinetics & toxicity
+  t90_days,
+  r_degrade,
+  r_tox,
+  r_micro,
+  r_leach_cec,
+  r_pfas_resid,
+  r_materials,
+  // Lyapunov & KER
+  vt_window,
+  k_knowledge,
+  e_eco_impact,
+  r_risk_of_harm,
+  ker_deployable,
+  // governance / provenance
+  spec_hash,
+  did_author,
+  hexstamp,
+  notes
+
+corridors
+  // KER thresholds for deployable industrial machinery. [file:20]
+  K_min          0.90
+  E_min          0.90
+  R_max          0.13
+
+  // carbon corridor: sequestration, neutral, net-positive bands. [file:20][file:9]
+  net_co2e_neg_kg   -5.0
+  net_co2e_neu_kg    0.0
+  net_co2e_pos_kg    5.0
+  r_carbon_safe_max  0.30
+  r_carbon_gold_max  0.60
+  r_carbon_hard_max  1.00
+
+  // materials corridors (Phoenix 2026 biodegradable stack). [file:22]
+  t90_hard_days      180.0
+  t90_gold_days      120.0
+  r_degrade_max      0.30
+  r_tox_gold_max     0.10
+  r_micro_max        0.05
+  r_leach_cec_max    0.10
+  r_pfas_resid_max   0.10
+  r_materials_safe_max 0.25
+  r_materials_gold_max 0.50
+  r_materials_hard_max 1.00
+
+kernels
+
+  // Carbon risk coordinate from net CO2-e, reusing Rust normalization semantics. [file:20][file:9]
+  kernel r_carbon_kernel
+    inputs  net_kg_co2e_per_cycle
+    outputs r_carbon
+    law
+      if net_kg_co2e_per_cycle <= net_co2e_neg_kg then
+        r_carbon = 0.0
+      else if net_kg_co2e_per_cycle <= net_co2e_neu_kg then
+        r_carbon = 0.1 * (net_kg_co2e_per_cycle - net_co2e_neg_kg)
+                     / max(net_co2e_neu_kg - net_co2e_neg_kg, 1e-6)
+      else if net_kg_co2e_per_cycle <= net_co2e_pos_kg then
+        r_carbon = 0.1 + 0.9 * (net_kg_co2e_per_cycle - net_co2e_neu_kg)
+                           / max(net_co2e_pos_kg - net_co2e_neu_kg, 1e-6)
+      else
+        r_carbon = 1.0
+      end
+
+  // Material residual coordinate from sub-risks (t90 and toxicity kernels live in lab stack). [file:22]
+  kernel r_materials_kernel
+    inputs  r_degrade, r_tox, r_micro, r_leach_cec, r_pfas_resid
+    outputs r_materials
+    law
+      r_materials = 0.25 * r_degrade
+                  + 0.25 * r_tox
+                  + 0.20 * r_micro
+                  + 0.15 * r_leach_cec
+                  + 0.15 * r_pfas_resid
+
+  // KER triad from Lyapunov window and max risk coordinate. [file:20]
+  kernel ker_kernel
+    inputs  vt_window, r_risk_of_harm
+    outputs k_knowledge, e_eco_impact, ker_deployable
+    law
+      // vt_window is an external aggregator; here we only assert bands.
+      e_eco_impact = 1.0 - r_risk_of_harm
+      // k_knowledge is provided from ecosafety core statistics.
+      if k_knowledge >= K_min
+         and e_eco_impact >= E_min
+         and r_risk_of_harm <= R_max then
+        ker_deployable = true
+      else
+        ker_deployable = false
+      end
+
+admissibility
+
+  gate1_corridors_complete
+    condition
+      t90_days > 0.0
+      and r_degrade <= r_degrade_max
+      and r_tox <= r_tox_gold_max
+      and r_micro <= r_micro_max
+      and r_leach_cec <= r_leach_cec_max
+      and r_pfas_resid <= r_pfas_resid_max
+
+  gate2_carbon_plane
+    condition
+      r_carbon <= r_carbon_hard_max
+
+  gate3_materials_plane
+    condition
+      r_materials <= r_materials_hard_max
+
+  gate4_ker_thresholds
+    condition
+      k_knowledge >= K_min
+      and e_eco_impact >= E_min
+      and r_risk_of_harm <= R_max
+      and ker_deployable = true
+
+writepolicy
+  // Only rows that satisfy all gates become governance-grade evidence. [file:20][file:22]
+  allow if gate1_corridors_complete
+         and gate2_carbon_plane
+         and gate3_materials_plane
+         and gate4_ker_thresholds
+
+shardwriter
+  CyboquaticCarbonMaterialMachineWriter2026
