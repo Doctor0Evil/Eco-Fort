@@ -1,0 +1,29 @@
+schemashardid,targetshardfamily,targetversion,colindex,colname,coltype,alnvarid,units,mandatory,isriskcoord,safeband,goldband,hardband,lyapweight,lyapchannel,rustsymbol,csymbol,description,citations
+AAT2026V1-SCHEMA-001,AcceleratedAgingTranslation2026v1,1.0.0,0,translation_model_id,String,,dimensionless,true,false,,,,,,translation_model_id,translation_model_id,Unique identifier for translation model,cyboquatic-substrate-v1
+AAT2026V1-SCHEMA-001,AcceleratedAgingTranslation2026v1,1.0.0,1,substrate_material,String,,dimensionless,true,false,,,,,,substrate_material,substrate_material,Polymer type e.g. PDMS PET PLA,cyboquatic-substrate-v1
+AAT2026V1-SCHEMA-001,AcceleratedAgingTranslation2026v1,1.0.0,2,accelerated_test_standard,String,,dimensionless,true,false,,,,,,accelerated_test_standard,accelerated_test_standard,ISO 4892-3 ISO 11357-3 OECD 310,cyboquatic-substrate-v1
+AAT2026V1-SCHEMA-001,AcceleratedAgingTranslation2026v1,1.0.0,3,uv_intensity_W_m2_nm340,Float,,W/m²@340nm,false,false,,,,,,uv_intensity_W_m2_nm340,uv_intensity_W_m2_nm340,UV irradiance for ISO 4892-3,cyboquatic-substrate-v1
+AAT2026V1-SCHEMA-001,AcceleratedAgingTranslation2026v1,1.0.0,4,thermal_cycling_min_c,Float,,degC,false,false,,,,,,thermal_cycling_min_c,thermal_cycling_min_c,Minimum temperature in cycle,cyboquatic-substrate-v1
+AAT2026V1-SCHEMA-001,AcceleratedAgingTranslation2026v1,1.0.0,5,thermal_cycling_max_c,Float,,degC,false,false,,,,,,thermal_cycling_max_c,thermal_cycling_max_c,Maximum temperature in cycle,cyboquatic-substrate-v1
+AAT2026V1-SCHEMA-001,AcceleratedAgingTranslation2026v1,1.0.0,6,thermal_ramp_rate_c_per_min,Float,,°C/min,false,false,,,,,,thermal_ramp_rate_c_per_min,thermal_ramp_rate_c_per_min,Ramp rate for thermal cycling,cyboquatic-substrate-v1
+AAT2026V1-SCHEMA-001,AcceleratedAgingTranslation2026v1,1.0.0,7,hydrolysis_ph,Float,,dimensionless,false,false,,,,,,hydrolysis_ph,hydrolysis_ph,pH for OECD 310 test,cyboquatic-substrate-v1
+AAT2026V1-SCHEMA-001,AcceleratedAgingTranslation2026v1,1.0.0,8,hydrolysis_temp_c,Float,,degC,false,false,,,,,,hydrolysis_temp_c,hydrolysis_temp_c,Temperature for hydrolysis test,cyboquatic-substrate-v1
+AAT2026V1-SCHEMA-001,AcceleratedAgingTranslation2026v1,1.0.0,9,flow_shear_stress_pa,Float,,Pa,false,false,,,,,,flow_shear_stress_pa,flow_shear_stress_pa,Wall shear stress for flow-adapted test,cyboquatic-substrate-v1
+AAT2026V1-SCHEMA-001,AcceleratedAgingTranslation2026v1,1.0.0,10,acceleration_factor,Float,,dimensionless,true,false,,,,,,acceleration_factor,acceleration_factor,Factor by which test accelerates real-world degradation,cyboquatic-substrate-v1
+AAT2026V1-SCHEMA-001,AcceleratedAgingTranslation2026v1,1.0.0,11,arrhenius_activation_energy_kJ_per_mol,Float,,kJ/mol,false,false,,,,,,arrhenius_activation_energy_kJ_per_mol,arrhenius_activation_energy_kJ_per_mol,Activation energy for Arrhenius translation,cyboquatic-substrate-v1
+AAT2026V1-SCHEMA-001,AcceleratedAgingTranslation2026v1,1.0.0,12,model_type,String,,dimensionless,true,false,,,,,,model_type,model_type,Arrhenius CumulativeDamage ML_Surrogate,cyboquatic-substrate-v1
+AAT2026V1-SCHEMA-001,AcceleratedAgingTranslation2026v1,1.0.0,13,predicted_t90_days_field,Float,,days,true,false,,,,,,predicted_t90_days_field,predicted_t90_days_field,Predicted t90 under field conditions,cyboquatic-substrate-v1
+AAT2026V1-SCHEMA-001,AcceleratedAgingTranslation2026v1,1.0.0,14,predicted_shedding_rate_field_mg_per_h_per_cm2,Float,,mg/h/cm²,true,false,,,,,,predicted_shedding_rate_field_mg_per_h_per_cm2,predicted_shedding_rate_field_mg_per_h_per_cm2,Predicted microplastic shedding rate in field,cyboquatic-substrate-v1
+AAT2026V1-SCHEMA-001,AcceleratedAgingTranslation2026v1,1.0.0,15,uncertainty_bounds_95pct,Float,,dimensionless,true,false,,,,,,uncertainty_bounds_95pct,uncertainty_bounds_95pct,95% confidence interval half-width as fraction of prediction,cyboquatic-substrate-v1
+
+AAT2026V1-SCHEMA-001,AcceleratedAgingTranslation2026v1,1.0.0,16,rtranslation_uncertainty,RiskCoord,rtranslation_uncertainty,dimensionless,true,true,0.0,0.10,0.13,0.7,6,rtranslation_uncertainty,rtranslation_uncertainty,Risk from translation model uncertainty,cyboquatic-substrate-v1
+AAT2026V1-SCHEMA-001,AcceleratedAgingTranslation2026v1,1.0.0,17,rcalib,RiskCoord,rcalib,dimensionless,true,true,0.0,0.04,0.13,0.8,6,rcalib,rcalib,Ingest-schema quality risk,ecosafety-schema-rcalib
+
+AAT2026V1-SCHEMA-001,AcceleratedAgingTranslation2026v1,1.0.0,18,vt,Residual,,dimensionless,true,false,,,,,,vt,vt,Lyapunov residual,ecosafety-core-v2
+AAT2026V1-SCHEMA-001,AcceleratedAgingTranslation2026v1,1.0.0,19,kscore,Float,,dimensionless,true,false,,,,,,kscore,kscore,Knowledge factor K,ecosafety-core-v2
+AAT2026V1-SCHEMA-001,AcceleratedAgingTranslation2026v1,1.0.0,20,escore,Float,,dimensionless,true,false,,,,,,escore,escore,Eco-impact factor E,ecosafety-core-v2
+AAT2026V1-SCHEMA-001,AcceleratedAgingTranslation2026v1,1.0.0,21,rscore,Float,,dimensionless,true,false,,,,,,rscore,rscore,Risk-of-harm factor R,ecosafety-core-v2
+AAT2026V1-SCHEMA-001,AcceleratedAgingTranslation2026v1,1.0.0,22,dtdata,Float,,dimensionless,true,false,,,,,,dtdata,dtdata,Data trust 1.0 - rcalib,schema-shard-v1
+AAT2026V1-SCHEMA-001,AcceleratedAgingTranslation2026v1,1.0.0,23,lane,String,,dimensionless,true,false,,,,,,lane,lane,RESEARCH only,ecosafety-core-v2
+AAT2026V1-SCHEMA-001,AcceleratedAgingTranslation2026v1,1.0.0,24,evidencehex,Hex64,,hex,true,false,,,,,,evidencehex,evidencehex,64-char hex evidence hash,ecosafety-core-v2
+AAT2026V1-SCHEMA-001,AcceleratedAgingTranslation2026v1,1.0.0,25,signinghex,Hex64,,hex,true,false,,,,,,signinghex,signinghex,64-char hex signing hash,ecosafety-core-v2
