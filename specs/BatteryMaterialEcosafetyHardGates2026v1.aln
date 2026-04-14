@@ -1,0 +1,80 @@
+spec BatteryMaterialEcosafetyHardGates2026 v1.0.0
+  purpose  EU Battery Regulation 2023/1542 hard gates for battery materials:
+           carbon footprint, recycled content, hazardous substances, and
+           recyclability. Supply chain criticality is separated into
+           deployment lane recommendations only.
+
+  requires EcoNetSchemaShard2026 v1.0.0
+  requires invariant kerdeployable v2.0.0
+  requires CeimEnergyMass v1.0.0
+
+  shardschema
+    path qpudatashards/battery/BatteryMaterialEcosafetyHardGates2026v1.csv
+    role BatteryMaterialHardGate
+    fields
+      battery_model_id                      -- string, unique ID
+      chemistry                             -- string, LiFePO4|NMC|LCO|Na-ion
+      capacity_kwh                          -- float, kWh
+      carbon_footprint_kgCO2e_per_kWh       -- float, kg CO₂e/kWh
+      recycled_cobalt_pct                   -- float, %
+      recycled_lithium_pct                  -- float, %
+      recycled_nickel_pct                   -- float, %
+      hazardous_lead_ppm                    -- float, ppm
+      hazardous_cadmium_ppm                 -- float, ppm
+      hazardous_mercury_ppm                 -- float, ppm
+      recyclability_rate_pct                -- float, %
+      supply_chain_geopolitical_risk_score  -- float, 0-1
+      material_concentration_index          -- float, HHI
+      digital_passport_id                   -- string, EU passport
+
+      rcarbon_battery                       -- RiskCoord, carbon risk
+      rrecycled_content                     -- RiskCoord, recycled content risk
+      rhazardous_substances                 -- RiskCoord, hazardous substances risk
+      rrecyclability                        -- RiskCoord, recyclability risk
+      rmaterials_battery_hardgate           -- RiskCoord, composite hard-gate risk
+
+      hardgate_pass                         -- boolean, EU hard gates satisfied
+      deployment_lane_recommendation        -- string, geographic restriction
+      rcalib                                -- RiskCoord, ingest quality
+
+      vt                                    -- Residual
+      kscore                                -- float
+      escore                                -- float
+      rscore                                -- float
+      dtdata                                -- float, 1 - rcalib
+      deploydecision                        -- string, includes BlockedByHardGate
+      lane                                  -- string, RESEARCH|PRODUCTION
+      evidencehex                           -- hex64
+      signinghex                            -- hex64
+
+  corridors
+    rcarbon_battery
+      safeband 0.0 0.08 goldband 0.08 0.13 hardband 0.13 1.00 lyapweight 1.3 channel carbon
+    rrecycled_content
+      safeband 0.0 0.10 goldband 0.10 0.13 hardband 0.13 1.00 lyapweight 1.1 channel materials
+    rhazardous_substances
+      safeband 0.0 0.05 goldband 0.05 0.13 hardband 0.13 1.00 lyapweight 1.5 channel materials
+    rrecyclability
+      safeband 0.0 0.10 goldband 0.10 0.13 hardband 0.13 1.00 lyapweight 1.2 channel materials
+    rmaterials_battery_hardgate
+      safeband 0.0 0.10 goldband 0.10 0.13 hardband 0.13 1.00 lyapweight 1.0 channel materials
+    rcalib
+      safeband 0.0 0.00 goldband 0.00 0.04 hardband 0.13 1.00 lyapweight 0.8 channel dataquality
+
+  invariant hardgate_must_pass
+    condition hardgate_pass == true
+    message "Battery fails EU Regulation 2023/1542 hard gate and cannot be deployed."
+
+  writepolicy
+    gate1_schema_from   EcoNetSchemaShard2026v1
+    gate2_rcalib_gold   rcalib <= 0.04
+    gate3_hardgate      hardgate_pass == true
+    gate4_ker_production
+      kmin  0.90
+      emin  0.90
+      rmax  0.13
+
+  note Supply chain risk scores (geopolitical_risk_score, material_concentration_index)
+       do NOT affect hardgate_pass or risk coordinates; they only influence
+       deployment_lane_recommendation, per IEC 62430 Annex B.
+end
