@@ -1,0 +1,35 @@
+schemashardid,targetshardfamily,targetversion,colindex,colname,coltype,alnvarid,units,mandatory,isriskcoord,safeband,goldband,hardband,lyapweight,lyapchannel,rustsymbol,csymbol,description,citations
+BMH2026V1-SCHEMA-001,BatteryMaterialEcosafetyHardGates2026v1,1.0.0,0,battery_model_id,String,,dimensionless,true,false,,,,,,battery_model_id,battery_model_id,Unique battery model identifier,ceim-energy-mass
+BMH2026V1-SCHEMA-001,BatteryMaterialEcosafetyHardGates2026v1,1.0.0,1,chemistry,String,,dimensionless,true,false,,,,,,chemistry,chemistry,LiFePO4 NMC LCO Na-ion,ceim-energy-mass
+BMH2026V1-SCHEMA-001,BatteryMaterialEcosafetyHardGates2026v1,1.0.0,2,capacity_kwh,Float,,kWh,true,false,,,,,,capacity_kwh,capacity_kwh,Nominal energy capacity,ceim-energy-mass
+BMH2026V1-SCHEMA-001,BatteryMaterialEcosafetyHardGates2026v1,1.0.0,3,carbon_footprint_kgCO2e_per_kWh,Float,,kg CO₂e/kWh,true,false,,,,,,carbon_footprint_kgCO2e_per_kWh,carbon_footprint_kgCO2e_per_kWh,Lifecycle carbon intensity per kWh,ceim-energy-mass
+BMH2026V1-SCHEMA-001,BatteryMaterialEcosafetyHardGates2026v1,1.0.0,4,recycled_cobalt_pct,Float,,percent,true,false,,,,,,recycled_cobalt_pct,recycled_cobalt_pct,Percentage of recycled cobalt content,ceim-energy-mass
+BMH2026V1-SCHEMA-001,BatteryMaterialEcosafetyHardGates2026v1,1.0.0,5,recycled_lithium_pct,Float,,percent,true,false,,,,,,recycled_lithium_pct,recycled_lithium_pct,Percentage of recycled lithium content,ceim-energy-mass
+BMH2026V1-SCHEMA-001,BatteryMaterialEcosafetyHardGates2026v1,1.0.0,6,recycled_nickel_pct,Float,,percent,true,false,,,,,,recycled_nickel_pct,recycled_nickel_pct,Percentage of recycled nickel content,ceim-energy-mass
+BMH2026V1-SCHEMA-001,BatteryMaterialEcosafetyHardGates2026v1,1.0.0,7,hazardous_lead_ppm,Float,,ppm,true,false,,,,,,hazardous_lead_ppm,hazardous_lead_ppm,Lead concentration,ceim-energy-mass
+BMH2026V1-SCHEMA-001,BatteryMaterialEcosafetyHardGates2026v1,1.0.0,8,hazardous_cadmium_ppm,Float,,ppm,true,false,,,,,,hazardous_cadmium_ppm,hazardous_cadmium_ppm,Cadmium concentration,ceim-energy-mass
+BMH2026V1-SCHEMA-001,BatteryMaterialEcosafetyHardGates2026v1,1.0.0,9,hazardous_mercury_ppm,Float,,ppm,true,false,,,,,,hazardous_mercury_ppm,hazardous_mercury_ppm,Mercury concentration,ceim-energy-mass
+BMH2026V1-SCHEMA-001,BatteryMaterialEcosafetyHardGates2026v1,1.0.0,10,recyclability_rate_pct,Float,,percent,true,false,,,,,,recyclability_rate_pct,recyclability_rate_pct,Verified end-of-life recycling efficiency,ceim-energy-mass
+BMH2026V1-SCHEMA-001,BatteryMaterialEcosafetyHardGates2026v1,1.0.0,11,supply_chain_geopolitical_risk_score,Float,,dimensionless,true,false,,,,,,supply_chain_geopolitical_risk_score,supply_chain_geopolitical_risk_score,Geopolitical risk index 0-1,ceim-energy-mass
+BMH2026V1-SCHEMA-001,BatteryMaterialEcosafetyHardGates2026v1,1.0.0,12,material_concentration_index,Float,,dimensionless,true,false,,,,,,material_concentration_index,material_concentration_index,Herfindahl-Hirschman index for supply concentration,ceim-energy-mass
+BMH2026V1-SCHEMA-001,BatteryMaterialEcosafetyHardGates2026v1,1.0.0,13,digital_passport_id,String,,dimensionless,true,false,,,,,,digital_passport_id,digital_passport_id,EU Battery Passport identifier,ceim-energy-mass
+
+BMH2026V1-SCHEMA-001,BatteryMaterialEcosafetyHardGates2026v1,1.0.0,14,rcarbon_battery,RiskCoord,rcarbon_battery,dimensionless,true,true,0.0,0.08,0.13,1.3,3,rcarbon_battery,rcarbon_battery,Normalized carbon footprint risk,ceim-energy-mass
+BMH2026V1-SCHEMA-001,BatteryMaterialEcosafetyHardGates2026v1,1.0.0,15,rrecycled_content,RiskCoord,rrecycled_content,dimensionless,true,true,0.0,0.10,0.13,1.1,4,rrecycled_content,rrecycled_content,Normalized risk from insufficient recycled content,ceim-energy-mass
+BMH2026V1-SCHEMA-001,BatteryMaterialEcosafetyHardGates2026v1,1.0.0,16,rhazardous_substances,RiskCoord,rhazardous_substances,dimensionless,true,true,0.0,0.05,0.13,1.5,4,rhazardous_substances,rhazardous_substances,Normalized risk from hazardous substances,ceim-energy-mass
+BMH2026V1-SCHEMA-001,BatteryMaterialEcosafetyHardGates2026v1,1.0.0,17,rrecyclability,RiskCoord,rrecyclability,dimensionless,true,true,0.0,0.10,0.13,1.2,4,rrecyclability,rrecyclability,Normalized risk from low recyclability,ceim-energy-mass
+BMH2026V1-SCHEMA-001,BatteryMaterialEcosafetyHardGates2026v1,1.0.0,18,rmaterials_battery_hardgate,RiskCoord,rmaterials_battery_hardgate,dimensionless,true,true,0.0,0.10,0.13,1.0,4,rmaterials_battery_hardgate,rmaterials_battery_hardgate,Composite hard-gated materials risk,ceim-energy-mass
+
+BMH2026V1-SCHEMA-001,BatteryMaterialEcosafetyHardGates2026v1,1.0.0,19,hardgate_pass,Boolean,,dimensionless,true,false,,,,,,hardgate_pass,hardgate_pass,True if all EU hard gates are satisfied,ceim-energy-mass
+BMH2026V1-SCHEMA-001,BatteryMaterialEcosafetyHardGates2026v1,1.0.0,20,deployment_lane_recommendation,String,,dimensionless,true,false,,,,,,deployment_lane_recommendation,deployment_lane_recommendation,Geographic restriction based on supply chain risk,ceim-energy-mass
+BMH2026V1-SCHEMA-001,BatteryMaterialEcosafetyHardGates2026v1,1.0.0,21,rcalib,RiskCoord,rcalib,dimensionless,true,true,0.0,0.04,0.13,0.8,6,rcalib,rcalib,Ingest-schema quality risk,ecosafety-schema-rcalib
+
+BMH2026V1-SCHEMA-001,BatteryMaterialEcosafetyHardGates2026v1,1.0.0,22,vt,Residual,,dimensionless,true,false,,,,,,vt,vt,Lyapunov residual,ecosafety-core-v2
+BMH2026V1-SCHEMA-001,BatteryMaterialEcosafetyHardGates2026v1,1.0.0,23,kscore,Float,,dimensionless,true,false,,,,,,kscore,kscore,Knowledge factor K,ecosafety-core-v2
+BMH2026V1-SCHEMA-001,BatteryMaterialEcosafetyHardGates2026v1,1.0.0,24,escore,Float,,dimensionless,true,false,,,,,,escore,escore,Eco-impact factor E,ecosafety-core-v2
+BMH2026V1-SCHEMA-001,BatteryMaterialEcosafetyHardGates2026v1,1.0.0,25,rscore,Float,,dimensionless,true,false,,,,,,rscore,rscore,Risk-of-harm factor R,ecosafety-core-v2
+BMH2026V1-SCHEMA-001,BatteryMaterialEcosafetyHardGates2026v1,1.0.0,26,dtdata,Float,,dimensionless,true,false,,,,,,dtdata,dtdata,Data trust 1.0 - rcalib,schema-shard-v1
+BMH2026V1-SCHEMA-001,BatteryMaterialEcosafetyHardGates2026v1,1.0.0,27,deploydecision,String,,dimensionless,true,false,,,,,,deploydecision,deploydecision,Deploy ResearchOnly BlockedByCalib BlockedByRisk BlockedByKER BlockedByHardGate,ecosafety-core-v2
+BMH2026V1-SCHEMA-001,BatteryMaterialEcosafetyHardGates2026v1,1.0.0,28,lane,String,,dimensionless,true,false,,,,,,lane,lane,RESEARCH or PRODUCTION,ecosafety-core-v2
+BMH2026V1-SCHEMA-001,BatteryMaterialEcosafetyHardGates2026v1,1.0.0,29,evidencehex,Hex64,,hex,true,false,,,,,,evidencehex,evidencehex,64-char hex evidence hash,ecosafety-core-v2
+BMH2026V1-SCHEMA-001,BatteryMaterialEcosafetyHardGates2026v1,1.0.0,30,signinghex,Hex64,,hex,true,false,,,,,,signinghex,signinghex,64-char hex signing hash,ecosafety-core-v2
