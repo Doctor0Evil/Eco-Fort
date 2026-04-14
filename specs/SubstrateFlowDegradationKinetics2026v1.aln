@@ -1,0 +1,65 @@
+spec SubstrateFlowDegradationKinetics2026 v1.0.0
+  purpose  Flow-regime-resolved microplastic shedding, crack propagation,
+           and hydrolysis acceleration kinetics for polymeric channel
+           substrates (PDMS, PET, PLA). Provides empirical basis for
+           rmicro and rhydrolysis risk coordinates in ecosafety shards.
+
+  requires EcoNetSchemaShard2026 v1.0.0
+  requires invariant kerdeployable v2.0.0
+  requires CyboquaticSubstrateCore v1.0.0
+
+  shardschema
+    path qpudatashards/kinetics/SubstrateFlowDegradationKinetics2026v1.csv
+    role FlowDegradationEvidence
+    fields
+      experiment_id                 -- string, unique ID
+      substrate_material            -- string, PDMS|PET|PLA
+      flow_regime                   -- string, laminar|transitional|turbulent
+      reynolds_number               -- float, Re
+      wall_shear_stress_pa          -- float, Pa
+      temperature_c                 -- float, degC
+      ph                            -- float, pH
+      dissolved_oxygen_mgL          -- float, mg/L
+      shedding_rate_mg_per_h_per_cm2-- float, mg/h/cm²
+      shedding_rate_particles_per_sec-- float, particles/s
+      crack_propagation_velocity_um_per_s -- float, µm/s
+      fibrillation_onset_time_h     -- float, hours
+      hydrolysis_acceleration_factor-- float, dimensionless
+      biofilm_present               -- boolean
+      test_duration_h               -- float, hours
+
+      rshedding                     -- RiskCoord, shedding risk
+      rcrack                        -- RiskCoord, crack propagation risk
+      rhydrolysis                   -- RiskCoord, hydrolysis acceleration risk
+      rmaterials_flow               -- RiskCoord, composite flow-degradation risk
+
+      corridor_present              -- boolean
+      rcalib                        -- RiskCoord, ingest quality
+      vt_materials                  -- Residual
+      kscore                        -- float
+      escore                        -- float
+      rscore                        -- float
+      lane                          -- string, RESEARCH only
+      evidencehex                   -- hex64
+      signinghex                    -- hex64
+
+  corridors
+    rshedding
+      safeband 0.0 0.10 goldband 0.10 0.13 hardband 0.13 1.00 lyapweight 1.2 channel materials
+    rcrack
+      safeband 0.0 0.10 goldband 0.10 0.13 hardband 0.13 1.00 lyapweight 1.0 channel materials
+    rhydrolysis
+      safeband 0.0 0.10 goldband 0.10 0.13 hardband 0.13 1.00 lyapweight 1.1 channel materials
+    rmaterials_flow
+      safeband 0.0 0.10 goldband 0.10 0.13 hardband 0.13 1.00 lyapweight 1.0 channel materials
+    rcalib
+      safeband 0.0 0.00 goldband 0.00 0.04 hardband 0.13 1.00 lyapweight 0.8 channel dataquality
+
+  writepolicy
+    gate1_schema_from   EcoNetSchemaShard2026v1
+    gate2_rcalib_gold   rcalib <= 0.04
+    gate3_lane          lane == "RESEARCH"
+
+  note This shard feeds rmaterials_flow into field ecosafety shards; values
+       > goldmax block deployment of substrate channels.
+end
