@@ -1,0 +1,31 @@
+schemashardid,targetshardfamily,targetversion,colindex,colname,coltype,alnvarid,units,mandatory,isriskcoord,safeband,goldband,hardband,lyapweight,lyapchannel,rustsymbol,csymbol,description,citations
+SFK2026V1-SCHEMA-001,SubstrateFlowDegradationKinetics2026v1,1.0.0,0,experiment_id,String,,dimensionless,true,false,,,,,,experiment_id,experiment_id,Unique identifier for flow degradation experiment,cyboquatic-substrate-v1
+SFK2026V1-SCHEMA-001,SubstrateFlowDegradationKinetics2026v1,1.0.0,1,substrate_material,String,,dimensionless,true,false,,,,,,substrate_material,substrate_material,Polymer type e.g. PDMS PET PLA,cyboquatic-substrate-v1
+SFK2026V1-SCHEMA-001,SubstrateFlowDegradationKinetics2026v1,1.0.0,2,flow_regime,String,,dimensionless,true,false,,,,,,flow_regime,flow_regime,laminar transitional turbulent,cyboquatic-substrate-v1
+SFK2026V1-SCHEMA-001,SubstrateFlowDegradationKinetics2026v1,1.0.0,3,reynolds_number,Float,,dimensionless,true,false,,,,,,reynolds_number,reynolds_number,Reynolds number of flow regime,cyboquatic-substrate-v1
+SFK2026V1-SCHEMA-001,SubstrateFlowDegradationKinetics2026v1,1.0.0,4,wall_shear_stress_pa,Float,,Pa,true,false,,,,,,wall_shear_stress_pa,wall_shear_stress_pa,Wall shear stress at substrate surface,cyboquatic-substrate-v1
+SFK2026V1-SCHEMA-001,SubstrateFlowDegradationKinetics2026v1,1.0.0,5,temperature_c,Float,,degC,true,false,,,,,,temperature_c,temperature_c,Water temperature during experiment,cyboquatic-substrate-v1
+SFK2026V1-SCHEMA-001,SubstrateFlowDegradationKinetics2026v1,1.0.0,6,ph,Float,,dimensionless,true,false,,,,,,ph,ph,pH of aqueous medium,cyboquatic-substrate-v1
+SFK2026V1-SCHEMA-001,SubstrateFlowDegradationKinetics2026v1,1.0.0,7,dissolved_oxygen_mgL,Float,,mg/L,true,false,,,,,,dissolved_oxygen_mgL,dissolved_oxygen_mgL,Dissolved oxygen concentration,cyboquatic-substrate-v1
+SFK2026V1-SCHEMA-001,SubstrateFlowDegradationKinetics2026v1,1.0.0,8,shedding_rate_mg_per_h_per_cm2,Float,,mg/h/cm²,true,false,,,,,,shedding_rate_mg_per_h_per_cm2,shedding_rate_mg_per_h_per_cm2,Microplastic mass shedding rate per unit area,cyboquatic-substrate-v1
+SFK2026V1-SCHEMA-001,SubstrateFlowDegradationKinetics2026v1,1.0.0,9,shedding_rate_particles_per_sec,Float,,particles/s,true,false,,,,,,shedding_rate_particles_per_sec,shedding_rate_particles_per_sec,Microplastic particle emission rate,cyboquatic-substrate-v1
+SFK2026V1-SCHEMA-001,SubstrateFlowDegradationKinetics2026v1,1.0.0,10,crack_propagation_velocity_um_per_s,Float,,µm/s,true,false,,,,,,crack_propagation_velocity_um_per_s,crack_propagation_velocity_um_per_s,Mean crack growth velocity under flow,cyboquatic-substrate-v1
+SFK2026V1-SCHEMA-001,SubstrateFlowDegradationKinetics2026v1,1.0.0,11,fibrillation_onset_time_h,Float,,hours,true,false,,,,,,fibrillation_onset_time_h,fibrillation_onset_time_h,Time to first observed fibrillation,cyboquatic-substrate-v1
+SFK2026V1-SCHEMA-001,SubstrateFlowDegradationKinetics2026v1,1.0.0,12,hydrolysis_acceleration_factor,Float,,dimensionless,true,false,,,,,,hydrolysis_acceleration_factor,hydrolysis_acceleration_factor,Factor by which hydrolysis rate increases relative to static immersion,cyboquatic-substrate-v1
+SFK2026V1-SCHEMA-001,SubstrateFlowDegradationKinetics2026v1,1.0.0,13,biofilm_present,Boolean,,dimensionless,true,false,,,,,,biofilm_present,biofilm_present,Whether a biofilm was present during measurement,cyboquatic-substrate-v1
+SFK2026V1-SCHEMA-001,SubstrateFlowDegradationKinetics2026v1,1.0.0,14,test_duration_h,Float,,hours,true,false,,,,,,test_duration_h,test_duration_h,Total duration of flow exposure,cyboquatic-substrate-v1
+
+SFK2026V1-SCHEMA-001,SubstrateFlowDegradationKinetics2026v1,1.0.0,15,rshedding,RiskCoord,rshedding,dimensionless,true,true,0.0,0.10,0.13,1.2,4,rshedding,rshedding,Normalized risk from microplastic shedding rate,cyboquatic-substrate-v1
+SFK2026V1-SCHEMA-001,SubstrateFlowDegradationKinetics2026v1,1.0.0,16,rcrack,RiskCoord,rcrack,dimensionless,true,true,0.0,0.10,0.13,1.0,4,rcrack,rcrack,Normalized risk from crack propagation velocity,cyboquatic-substrate-v1
+SFK2026V1-SCHEMA-001,SubstrateFlowDegradationKinetics2026v1,1.0.0,17,rhydrolysis,RiskCoord,rhydrolysis,dimensionless,true,true,0.0,0.10,0.13,1.1,4,rhydrolysis,rhydrolysis,Normalized risk from hydrolysis acceleration,cyboquatic-substrate-v1
+SFK2026V1-SCHEMA-001,SubstrateFlowDegradationKinetics2026v1,1.0.0,18,rmaterials_flow,RiskCoord,rmaterials_flow,dimensionless,true,true,0.0,0.10,0.13,1.0,4,rmaterials_flow,rmaterials_flow,Composite materials risk for flow degradation,cyboquatic-substrate-v1
+
+SFK2026V1-SCHEMA-001,SubstrateFlowDegradationKinetics2026v1,1.0.0,19,corridor_present,Boolean,,dimensionless,true,false,,,,,,corridor_present,corridor_present,True if all required corridors are referenced,ecosafety-core-v2
+SFK2026V1-SCHEMA-001,SubstrateFlowDegradationKinetics2026v1,1.0.0,20,rcalib,RiskCoord,rcalib,dimensionless,true,true,0.0,0.04,0.13,0.8,6,rcalib,rcalib,Ingest-schema quality risk coordinate 0-1,ecosafety-schema-rcalib
+SFK2026V1-SCHEMA-001,SubstrateFlowDegradationKinetics2026v1,1.0.0,21,vt_materials,Residual,,dimensionless,true,false,,,,,,vt_materials,vt_materials,Lyapunov residual for flow degradation experiment,ecosafety-core-v2
+SFK2026V1-SCHEMA-001,SubstrateFlowDegradationKinetics2026v1,1.0.0,22,kscore,Float,,dimensionless,true,false,,,,,,kscore,kscore,Knowledge factor K,ecosafety-core-v2
+SFK2026V1-SCHEMA-001,SubstrateFlowDegradationKinetics2026v1,1.0.0,23,escore,Float,,dimensionless,true,false,,,,,,escore,escore,Eco-impact factor E,ecosafety-core-v2
+SFK2026V1-SCHEMA-001,SubstrateFlowDegradationKinetics2026v1,1.0.0,24,rscore,Float,,dimensionless,true,false,,,,,,rscore,rscore,Risk-of-harm factor R,ecosafety-core-v2
+SFK2026V1-SCHEMA-001,SubstrateFlowDegradationKinetics2026v1,1.0.0,25,lane,String,,dimensionless,true,false,,,,,,lane,lane,RESEARCH only,ecosafety-core-v2
+SFK2026V1-SCHEMA-001,SubstrateFlowDegradationKinetics2026v1,1.0.0,26,evidencehex,Hex64,,hex,true,false,,,,,,evidencehex,evidencehex,64-char hex evidence hash,ecosafety-core-v2
+SFK2026V1-SCHEMA-001,SubstrateFlowDegradationKinetics2026v1,1.0.0,27,signinghex,Hex64,,hex,true,false,,,,,,signinghex,signinghex,64-char hex signing hash,ecosafety-core-v2
