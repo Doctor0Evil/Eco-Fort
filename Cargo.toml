@@ -1,7 +1,91 @@
+# Filename: workspace/Cargo.toml
+
 [workspace]
 members = [
+    # Legacy crates/* members (existing from earlier setup)
     "crates/ecosafety_core",
     "crates/qpudataschemashard",
     "crates/qpudatashardwriter",
+
+    # Top-level workspace members (directories at workspace/*)
+    "responseshard",
+    "marpilotsatcell",
+
+    # Core Cyboquatic / ecosafety crates
+    "cyboquatic-ecosafety-core",
+    "cyboquatic-fog-routing",
+    "cyboquatic-energy-mass",
+    "cyboquatic-materials",
+    "econet-material-cybo",
+    "kercore",
+    "kerspine",
+    "ecosafety-core",
+    "ecosafety-macros",
+    "ecosafety-ffi-lua",
+    "chatguardcore",
+    "fogecobiomekernel",
+    "opt-cyboquatic-fog-router",
+    "ecosafety-core-canal",
+    "EcoNetTerminalAgent",
+    "ecosafety-cli",
+    "cyboquatic-eco-planes",
+    "chatshardscore",
+
+    # New crates for exabyte VFS and AIChat engagement.[file:3]
+    "ossvfs",
+    "responseshardcore",
+    "agentinterface",
+    "storageshards",
+    "buildscheduler",
+
+    # ALN parsing and derive macros.[file:3]
+    "aln-ast",
+    "aln-derive",
 ]
+
 resolver = "2"
+
+[workspace.package]
+edition    = "2021"
+license    = "MIT"
+version    = "0.2.0"
+authors    = ["Bostrom Ecosafety Stack"]
+description = "Ecorestoration shard repository with exabyte VFS, AIChat interface, and KER governance."
+
+[workspace.dependencies]
+serde      = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+thiserror  = "1.0"
+csv        = "1.3"
+chrono     = { version = "0.4", features = ["serde"] }
+hex        = "0.4"
+sha2       = "0.10"
+tokio      = { version = "1.0", features = ["full"] }
+tracing    = "0.1"
+clap       = { version = "4.0", features = ["derive"] }
+
+# Internal crate aliases so `*.workspace = true` dependencies resolve cleanly.[file:3]
+
+[workspace.dependencies.cyboquatic-ecosafety-core]
+path = "cyboquatic-ecosafety-core"
+
+[workspace.dependencies.responseshardcore]
+path = "responseshardcore"
+
+[workspace.dependencies.ossvfs]
+path = "ossvfs"
+
+[workspace.dependencies.agentinterface]
+path = "agentinterface"
+
+[workspace.dependencies.aln-ast]
+path = "aln-ast"
+
+[workspace.dependencies.aln-derive]
+path = "aln-derive"
+
+[workspace.dependencies.storageshards]
+path = "storageshards"
+
+[workspace.dependencies.buildscheduler]
+path = "buildscheduler"
