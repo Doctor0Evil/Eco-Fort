@@ -1,0 +1,17 @@
+# Filename: workspace/buildscheduler/Cargo.toml
+
+[package]
+name        = "buildscheduler"
+version     = { workspace = true }
+edition     = { workspace = true }
+license     = { workspace = true }
+description = "Compute-node ecosafety scheduler for Rust builds and agent workloads."
+authors     = { workspace = true }
+
+[dependencies]
+serde       = { workspace = true }
+serde_json  = { workspace = true }
+thiserror   = { workspace = true }
+tracing     = { workspace = true }
+cyboquatic-ecosafety-core = { workspace = true }
+storageshards = { workspace = true }
