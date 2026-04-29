@@ -1,0 +1,81 @@
+# Filename: specs/FOGRoutingDecision2026v1.aln
+
+shard FOGRoutingDecision2026v1 {
+  fields {
+    routing_id: u128;
+    timestamp_utc: datetime;
+    source_node_id: string;
+    dest_node_id: string;
+    variant_id: u64;
+
+    # Decision and predicate pass flags (all must pass to Accept).[file:22][file:23]
+    decision: enum { Accept, Reroute, Reject };
+    tailwind_valid_pass: bool;
+    biosurface_ok_pass: bool;
+    hydraulic_ok_pass: bool;
+    lyapunov_ok_pass: bool;
+    nodehealth_ok_pass: bool;
+    sec_ok_pass: bool;
+    class_ok_pass: bool;
+
+    # Residual and risk snapshots.
+    vt_before: f32;
+    vt_after: f32;
+    r_energy_after: f32;
+    r_hydraulics_after: f32;
+    r_biology_after: f32;
+    r_carbon_after: f32;
+    r_materials_after: f32;
+    r_biodiversity_after: f32;
+    r_sigma_after: f32;
+
+    # Window KER for the dest node.
+    ker_k: f32;
+    ker_e: f32;
+    ker_r: f32;
+
+    # Governance and provenance.[file:23][file:14]
+    lane: enum { EXP, TEST, PROD };
+    corridor_profile_id: string;
+    spec_hex: bytes[32];
+    evidence_hex: bytes[32];
+    bostrom_did: string;
+  }
+
+  kernel {
+    # Compute max risk and eco-impact.
+    let r_max = max(
+      r_energy_after,
+      r_hydraulics_after,
+      r_biology_after,
+      r_carbon_after,
+      r_materials_after,
+      r_biodiversity_after,
+      r_sigma_after
+    );
+    let eco_e = 1.0 - r_max;
+
+    # Compute KER deployability.[file:14][file:23]
+    let ker_deployable =
+      ker_k >= 0.90 && eco_e >= 0.90 && ker_r <= 0.13;
+  }
+
+  admissibility {
+    # If decision is Accept, all predicates must pass and Vt must not increase.[file:22][file:23]
+    if decision == Accept {
+      assert tailwind_valid_pass;
+      assert biosurface_ok_pass;
+      assert hydraulic_ok_pass;
+      assert lyapunov_ok_pass;
+      assert nodehealth_ok_pass;
+      assert sec_ok_pass;
+      assert class_ok_pass;
+      assert vt_after <= vt_before;
+    }
+
+    # PROD lane requires KER deployable.[file:14]
+    if lane == PROD {
+      assert ker_deployable;
+    }
+  }
+}
