@@ -1,13 +1,20 @@
+# Filename: crates/virta-git/config/policies/non_fiction_policy.toml
+
 [policy]
 id = "NON-FICTION"
 description = "Enforce non-fiction, real-world–anchored content across all Virta-Git operations."
 enforced = true
+version = "2026.1"
+lane = "PROD"        # PROD | PILOT | RESEARCH
 
 [rules]
 allow_fiction = false
 allow_hypothetical = false
 allow_theoretical_only = false
 require_real_world_anchor = true
+
+# Optional: require that every commit references at least one shard, spec, or evidencehex.
+require_evidence_anchor = true
 
 [pipeline]
 steps = [
@@ -25,3 +32,12 @@ on_detection_actions = [
   "log_incident",
   "attach_violation_code:FIC-001"
 ]
+
+[asset_reference_check]
+# Restrict references to known real-world anchors only.
+require_known_assets = true
+allow_unresolved_ids_in_research = false
+
+[logging]
+incident_log_shard_family = "VirtaGitPolicyIncidents2026v1"
+attach_ker_triad = true
