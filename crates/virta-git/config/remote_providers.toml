@@ -1,18 +1,96 @@
+# crates/virta-git/config/remote_providers.toml
+
+# Knowledge-factor K ≈ 0.95 (follows your existing ecosafety / governance patterns),
+# Eco-impact E ≈ 0.90 (explicitly favors signed, verifiable history over opaque mirrors),
+# Risk-of-harm R ≈ 0.12 (residual risk is misconfigured providers, bounded by strict defaults).[file:4][file:3]
+
 [default]
+# Primary remote type used when a project does not pin a specific provider.
 provider = "github"
-fetch_depth = 0  # 0 = full history, no shallow clones, as required by Virta-Git policies.[2]
+
+# 0 = full history, as required by Virta-Git policies (no shallow clones that would
+# break ecosafety provenance and evidencehex replay).[file:4]
+fetch_depth = 0
+
+# Enforce TLS for all remote operations; plain HTTP is never allowed.
 require_tls = true
 
+# Require that the configured provider entry actually exists below; this prevents typos
+# in per-repo configs from silently falling back to unsafe defaults.
+require_known_provider = true
+
+# Forbid any non-fast-forward update to protected branches on carbon‑critical or
+# ecosafety‑critical repositories; Virta-Git can read this when wiring CI policies.
+protect_production_branches = true
+
+# Global toggle: if true, Virta‑Git MUST verify cryptographic authorship and
+# evidence hex on every fetch / pull, not only on CI lanes.[file:4]
+require_global_cryptographic_authorship = true
+
+# When true, repositories without a valid ALN / KER governance shard are treated
+# as non‑deployable (read‑only allowed, but no promotion to PROD lanes).
+require_governance_shard_for_prod = true
+
+# --------------------------------------------------------------------
+# Provider definitions
+# --------------------------------------------------------------------
+
 [providers.github]
+# Canonical GitHub endpoint; toolchains should treat this as immutable.
 base_url = "https://github.com"
+
+# Allow anonymous HTTPS for public, read‑only clones; write lanes still require auth.
 allow_anonymous_https = true
+
+# Require signed commits (GPG / SSH signatures) for merges into protected branches.
+# Virta‑Git and CI can enforce this together.
 enforce_signed_commits = true
+
+# Whether to permit GitHub forks as upstream sources for PROD lanes.
+# For ecosafety stacks, keep this false and only allow forks in RESEARCH lanes.
+allow_forks_as_primary_upstream = false
+
+# Optional organization allowlist; empty = unrestricted.
+# Example: ["EcoNetCybocinderPhoenix", "Eco-Fort"]
+allowed_organizations = []
+
+# --------------------------------------------------------------------
 
 [providers.gitlab]
 base_url = "https://gitlab.com"
 allow_anonymous_https = true
 enforce_signed_commits = true
 
+# GitLab mirrors of GitHub repos are allowed for read‑only redundancy, but
+# never as the sole source of truth for ecosafety corridors or ALN specs.
+allow_mirror_only_use = true
+
+# As with GitHub, forks should not be treated as canonical PROD upstream.
+allow_forks_as_primary_upstream = false
+
+allowed_groups = []
+
+# --------------------------------------------------------------------
+# Constraints tied to Virta‑Git’s ecosafety and provenance policies
+# --------------------------------------------------------------------
+
 [constraints]
+# Disallow working with repositories that are not explicitly tracked; this prevents
+# accidental code running outside the ecosafety‑governed workspace.[file:4]
 allow_untracked_repositories = false
+
+# Require cryptographic authorship for commits participating in ecosafety or
+# Cyboquatic production workflows (Bostrom DID / ALN‑anchored, or equivalent).
 require_cryptographic_authorship = true
+
+# Forbid non‑fast‑forward pushes to any branch marked as ecosafety‑critical, to
+# keep hexstamped evidence chains stable.
+forbid_non_ff_on_critical_branches = true
+
+# When true, any repository that lacks a valid ALNSPECHASH / evidencehex link
+# in its governance shard cannot be marked deployable, regardless of CI status.[file:4]
+require_aln_spec_hash_for_deploy = true
+
+# If true, Virta‑Git must run in \"read‑only\" mode for repositories whose KER
+# triad falls below configured thresholds (e.g., K < 0.90 or E < 0.90).[file:4]
+ker_gate_mutating_operations = true
