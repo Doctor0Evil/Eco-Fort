@@ -1,0 +1,40 @@
+# Filename: specs/DecompositionScenario2026v1.aln
+
+shard DecompositionScenario2026v1 {
+  fields {
+    scenario_id: u128;
+    node_id: string;
+    material_id: string;
+    horizon_years: u16;
+
+    # Time-aggregated metrics from decomposition.sim / longhorizon.sim.[file:14]
+    max_r_carbon: f32;
+    max_r_biodiversity: f32;
+    max_r_materials: f32;
+    max_r_sigma: f32;
+    vt_initial: f32;
+    vt_final: f32;
+
+    ker_k: f32;
+    ker_e: f32;
+    ker_r: f32;
+
+    # Provenance.
+    corridor_profile_id: string;
+    spec_hex: bytes[32];
+    evidence_hex: bytes[32];
+    bostrom_did: string;
+  }
+
+  admissibility {
+    # Long-horizon stability and eco-safety.[file:14]
+    assert vt_final <= vt_initial;
+    assert max_r_carbon <= 0.30;
+    assert max_r_biodiversity <= 0.30;
+    assert max_r_materials <= 0.40;
+    assert max_r_sigma <= 0.40;
+    assert ker_k >= 0.90;
+    assert ker_e >= 0.90;
+    assert ker_r <= 0.13;
+  }
+}
