@@ -1,0 +1,14 @@
+# Filename: workspace/cyboquatic-ecosafety-core/Cargo.toml
+
+[package]
+name        = "cyboquatic-ecosafety-core"
+version     = { workspace = true }
+edition     = { workspace = true }
+license     = { workspace = true }
+description = "Cyboquatic ecosafety Lyapunov spine (rx–Vt–KER)."
+authors     = { workspace = true }
+
+[dependencies]
+serde       = { workspace = true, features = ["derive"] }
+thiserror   = { workspace = true }
+tracing     = { workspace = true }
