@@ -1,37 +1,93 @@
 [package]
-name = "virta-git"
-version = "0.1.0"
-edition = "2021"
+name        = "virta-git"
+version     = "0.1.0"
+edition     = "2021"
 description = "Virta-Git: non-fiction, policy-enforced Git source-of-truth for Virta-Sys and VSC-ARTEMIS."
-license = "MIT"
-authors = ["Dr. Jacob Scott Farmer <noreply@example.com>"]
-repository = "https://github.com/Doctor0Evil/Virta-Git.git"
+license     = "MIT"
+authors     = ["Dr. Jacob Scott Farmer <noreply@example.com>"]
+
+# Primary repository for this crate; additional upstreams are documented in metadata.
+repository  = "https://github.com/Doctor0Evil/Virta-Git.git"
+
+# Optional: home/readme to integrate better with crates.io and tooling.
+homepage    = "https://github.com/Doctor0Evil/Virta-Git"
+readme      = "README.md"
+
+# This crate can later be pulled into a larger workspace (Eco-Fort, EcoNet, Cyboquatic, etc.).
+# No [workspace] section here, so it behaves correctly as a leaf crate when used alone.
 
 [package.metadata.virta]
-system = "Virta-Git"
-virta_sys_anchor = "virta-sys"
-vsc_artemis_anchor = "VSC-ARTEMIS-5E8A2B7C-AC41-4F2B-BD6E-9C3E7A1F4D2E"
-config_manifest = "virta-git.config.json"
+system              = "Virta-Git"
+virta_sys_anchor    = "virta-sys"
+vsc_artemis_anchor  = "VSC-ARTEMIS-5E8A2B7C-AC41-4F2B-BD6E-9C3E7A1F4D2E"
+config_manifest     = "virta-git.config.json"
+
+# Optional: link to upstream ecosystems without confusing Cargo's repository field.
+upstreams = [
+    "https://github.com/Doctor0Evil/Eco-Fort.git",
+    "https://github.com/Doctor0Evil/Virta-Git.git",
+]
+
+# ---------------------------------------------------------------------------
+# Dependencies
+# ---------------------------------------------------------------------------
 
 [dependencies]
-serde = { version = "1.0", features = ["derive"] }
-serde_json = "1.0"
-toml = "0.8"
-thiserror = "1.0"
-chrono = { version = "0.4", features = ["serde"] }
-tokio = { version = "1.37", features = ["rt-multi-thread", "macros"] }
-git2 = "0.19"
-anyhow = "1.0"
+serde       = { version = "1.0", features = ["derive"] }
+serde_json  = "1.0"
+toml        = "0.8"
+thiserror   = "1.0"
+chrono      = { version = "0.4", features = ["serde"] }
+tokio       = { version = "1.37", features = ["rt-multi-thread", "macros"] }
+git2        = "0.19"
+anyhow      = "1.0"
 parking_lot = "0.12"
-uuid = { version = "1.10", features = ["v4", "serde"] }
+uuid        = { version = "1.10", features = ["v4", "serde"] }
+
+# Optional, but useful if you later plug Virta-Git into ecosafety-aware tooling.
+# They are commented out here to avoid pulling in heavy stacks unless you need them.
+# tracing     = "0.1"
+# tracing-subscriber = { version = "0.3", features = ["fmt", "env-filter"] }
+
+# ---------------------------------------------------------------------------
+# Features
+# ---------------------------------------------------------------------------
 
 [features]
+# Default build is the async runtime client.
 default = ["runtime"]
+
+# Runtime for long-lived, policy-enforced git processes (Tokio-based).
 runtime = []
+
+# Optional CLI front-end (you can gate a `bin` on this later).
 cli = []
 
+# ---------------------------------------------------------------------------
+# Profiles
+# ---------------------------------------------------------------------------
+
 [profile.release]
-lto = true
+lto           = true
 codegen-units = 1
-opt-level = "z"
-panic = "abort"
+opt-level     = "z"
+panic         = "abort"
+debug         = 0
+
+[profile.dev]
+opt-level = 1
+debug     = true
+overflow-checks = true
+incremental = true
+
+# ---------------------------------------------------------------------------
+# (Optional) Workspace hooks
+# ---------------------------------------------------------------------------
+# If you later embed virta-git into a larger workspace (Eco-Fort / EcoNet),
+# the root workspace Cargo.toml can point to this crate via:
+#
+#   [workspace.dependencies]
+#   virta-git = { path = "crates/virta-git" }
+#
+# No workspace table is declared here so this file remains valid both as a
+# standalone package and as a workspace member.
