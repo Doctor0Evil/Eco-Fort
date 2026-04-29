@@ -1,32 +1,59 @@
+# Filename: crates/virta-git/Cargo.toml
+
 [package]
 name        = "virta-git"
 version     = "0.1.0"
 edition     = "2021"
-description = "Virta-Git: non-fiction, policy-enforced Git source-of-truth for Virta-Sys and VSC-ARTEMIS."
+description = "Virta-Git: policy-aware Git front-end and non-fiction source-of-truth for Virta-Sys and VSC-ARTEMIS."
 license     = "MIT"
 authors     = ["Dr. Jacob Scott Farmer <noreply@example.com>"]
 
-# Primary repository for this crate; additional upstreams are documented in metadata.
+# Primary repository and documentation anchors.
 repository  = "https://github.com/Doctor0Evil/Virta-Git.git"
-
-# Optional: home/readme to integrate better with crates.io and tooling.
 homepage    = "https://github.com/Doctor0Evil/Virta-Git"
 readme      = "README.md"
 
-# This crate can later be pulled into a larger workspace (Eco-Fort, EcoNet, Cyboquatic, etc.).
-# No [workspace] section here, so it behaves correctly as a leaf crate when used alone.
+# This crate is designed to compile on its own, and also be pulled into
+# larger workspaces (Eco-Fort, EcoNet, Cyboquatic, etc.) via
+#   [workspace.dependencies]
+#   virta-git = { path = "crates/virta-git" }
 
 [package.metadata.virta]
 system              = "Virta-Git"
 virta_sys_anchor    = "virta-sys"
 vsc_artemis_anchor  = "VSC-ARTEMIS-5E8A2B7C-AC41-4F2B-BD6E-9C3E7A1F4D2E"
 config_manifest     = "virta-git.config.json"
-
-# Optional: link to upstream ecosystems without confusing Cargo's repository field.
 upstreams = [
     "https://github.com/Doctor0Evil/Eco-Fort.git",
     "https://github.com/Doctor0Evil/Virta-Git.git",
 ]
+
+[package.metadata.virta_git]
+# Root directory for configuration, relative to this crate.
+config_root        = "config"
+# Non-fiction policy path, relative to config_root.
+non_fiction_policy = "policies/non_fiction_policy.toml"
+
+[lib]
+name = "virta_git"
+path = "src/lib.rs"
+
+# ---------------------------------------------------------------------------
+# Features
+# ---------------------------------------------------------------------------
+
+[features]
+# Default build is async, with non-fiction policy enforcement enabled.
+default = ["runtime", "policy-non-fiction"]
+
+# Strict content policy enforcement lane.
+policy-non-fiction = []
+
+# Runtime for long-lived, policy-enforced git processes (Tokio-based).
+runtime = []
+
+# Optional CLI front-end (gate any [[bin]] targets using `required-features = ["cli"]`).
+cli = []
 
 # ---------------------------------------------------------------------------
 # Dependencies
@@ -44,24 +71,10 @@ anyhow      = "1.0"
 parking_lot = "0.12"
 uuid        = { version = "1.10", features = ["v4", "serde"] }
 
-# Optional, but useful if you later plug Virta-Git into ecosafety-aware tooling.
-# They are commented out here to avoid pulling in heavy stacks unless you need them.
-# tracing     = "0.1"
-# tracing-subscriber = { version = "0.3", features = ["fmt", "env-filter"] }
-
-# ---------------------------------------------------------------------------
-# Features
-# ---------------------------------------------------------------------------
-
-[features]
-# Default build is the async runtime client.
-default = ["runtime"]
-
-# Runtime for long-lived, policy-enforced git processes (Tokio-based).
-runtime = []
-
-# Optional CLI front-end (you can gate a `bin` on this later).
-cli = []
+# Optional, but useful when integrating with ecosafety-aware tooling and
+# FOG / KER observability stacks.[file:22][file:23]
+tracing              = "0.1"
+tracing-subscriber   = { version = "0.3", features = ["fmt", "env-filter"] }
 
 # ---------------------------------------------------------------------------
 # Profiles
@@ -75,19 +88,24 @@ panic         = "abort"
 debug         = 0
 
 [profile.dev]
-opt-level = 1
-debug     = true
-overflow-checks = true
-incremental = true
+opt-level        = 1
+debug            = true
+overflow-checks  = true
+incremental      = true
 
 # ---------------------------------------------------------------------------
-# (Optional) Workspace hooks
+# Workspace usage (documentation only)
 # ---------------------------------------------------------------------------
-# If you later embed virta-git into a larger workspace (Eco-Fort / EcoNet),
-# the root workspace Cargo.toml can point to this crate via:
+# In a root workspace Cargo.toml (e.g., Eco-Fort / EcoNet / Cyboquatic):
+#
+#   [workspace]
+#   members = [
+#       "crates/virta-git",
+#       # ...
+#   ]
 #
 #   [workspace.dependencies]
 #   virta-git = { path = "crates/virta-git" }
 #
-# No workspace table is declared here so this file remains valid both as a
-# standalone package and as a workspace member.
+# This crate does not declare its own [workspace] table, so it remains
+# valid as a standalone package while being consumable as a workspace member.
