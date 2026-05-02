@@ -43,7 +43,24 @@ pub struct RepoManifest {
     pub layers: Vec<Layer>,
     pub hints: Vec<RoleHint>,
 }
-// filename: src/lib.rs (continued)
+
+impl RepoManifest {
+    pub fn ker_tuple(&self) -> (f64, f64, f64) {
+        (
+            self.index.ker_target_k,
+            self.index.ker_target_e,
+            self.index.ker_target_r,
+        )
+    }
+
+    pub fn is_non_actuating(&self) -> bool {
+        self.index.non_actuating_only
+    }
+
+    pub fn has_layer_named(&self, name: &str) -> bool {
+        self.layers.iter().any(|l| l.layer_name == name)
+    }
+}
 
 #[derive(Debug, thiserror::Error)]
 pub enum ManifestError {
@@ -53,7 +70,7 @@ pub enum ManifestError {
     #[error("SQLite error while loading manifest: {0}")]
     Sql(#[from] rusqlite::Error),
 
-    #[error("No repo_index row found in econet_repo_index.sql")]
+    #[error("No econet_repo_index row found in manifest SQL")]
     NoRepoIndex,
 
     #[error("Manifest file not found at {0}")]
@@ -69,17 +86,14 @@ pub fn load_manifest_from_repo(repo_root: &Path) -> Result<RepoManifest, Manifes
     if !path.exists() {
         return Err(ManifestError::NotFound(path.display().to_string()));
     }
-
     let sql = fs::read_to_string(&path)?;
     load_manifest_from_sql(&sql)
 }
 
-/// Load a RepoManifest from raw SQL text (useful for tests or embedding).
 pub fn load_manifest_from_sql(sql: &str) -> Result<RepoManifest, ManifestError> {
     let conn = Connection::open_in_memory()?;
     conn.execute_batch(sql)?;
 
-    // Fetch index row (we expect exactly one).
     let mut stmt = conn.prepare(
         r#"SELECT
                repo_name,
@@ -120,9 +134,12 @@ pub fn load_manifest_from_sql(sql: &str) -> Result<RepoManifest, ManifestError> 
         })
     })?;
 
-    let index = idx_iter.into_iter().next().transpose()?.ok_or(ManifestError::NoRepoIndex)?;
+    let index = idx_iter
+        .into_iter()
+        .next()
+        .transpose()?
+        .ok_or(ManifestError::NoRepoIndex)?;
 
-    // Fetch layers.
     let mut layer_stmt = conn.prepare(
         r#"SELECT
                layer_name,
@@ -146,11 +163,10 @@ pub fn load_manifest_from_sql(sql: &str) -> Result<RepoManifest, ManifestError> 
     })?;
 
     let mut layers = Vec::new();
-    for l in layer_iter {
-        layers.push(l?);
+    for layer in layer_iter {
+        layers.push(layer?);
     }
 
-    // Fetch role hints.
     let mut hint_stmt = conn.prepare(
         r#"SELECT key, value
            FROM econet_role_hint
@@ -166,8 +182,8 @@ pub fn load_manifest_from_sql(sql: &str) -> Result<RepoManifest, ManifestError> 
     })?;
 
     let mut hints = Vec::new();
-    for h in hint_iter {
-        hints.push(h?);
+    for hint in hint_iter {
+        hints.push(hint?);
     }
 
     Ok(RepoManifest {
