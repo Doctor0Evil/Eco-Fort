@@ -1,0 +1,20 @@
+invariant NoOffsetAboveGold.v1
+  purpose "For planes marked non_offsettable, any step that raises r_plane
+           above gold_threshold must not decrease R or increase E."
+
+  requires ecosafety.corridors.v2
+  requires CyboquaticTrustAndEcoPlanes2026v1
+
+  plane_weights_source "planeweights_contract:contract_name=CyboquaticTrustAndEcoPlanes2026v1"
+
+  rule per_plane_noncompensation
+    for each plane in planeweights_plane
+      where non_offsettable = 1
+    ensure
+      if r_plane_prev >= gold_threshold
+         and r_plane_next > r_plane_prev then
+           R_next >= R_prev
+           E_next <= E_prev
+      end
+  end
+end
