@@ -1,0 +1,33 @@
+invariant LaneGovernance.v1
+  purpose "Define K/E/R-gated rules for RESEARCH→EXPPROD→PROD transitions."
+
+  requires invariant.kerdeployable.v2.0.0
+
+  rule research_to_expprod
+    if current_lane == "RESEARCH"
+       and proposed_lane == "EXPPROD"
+       and K >= 0.90
+       and E >= 0.90
+       and R <= 0.13
+       and kerdeployable == true then
+         decision = "APPROVE"
+    else
+         decision = "REJECT"
+    end
+  end
+
+  rule expprod_to_prod
+    if current_lane == "EXPPROD"
+       and proposed_lane == "PROD"
+       and K >= 0.93
+       and E >= 0.90
+       and R <= 0.13
+       and kerdeployable == true
+       and rcalib <= rcalib_max_prod
+       and rsigma <= rsigma_max_prod then
+         decision = "APPROVE"
+    else
+         decision = "REJECT"
+    end
+  end
+end
