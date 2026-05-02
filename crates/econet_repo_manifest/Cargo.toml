@@ -1,0 +1,13 @@
+[package]
+name = "econet_repo_manifest"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+rusqlite = { version = "0.31", features = ["bundled"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+[lib]
+name = "econet_repo_manifest"
+crate-type = ["rlib", "cdylib"]  # cdylib for FFI (Lua/Kotlin)
