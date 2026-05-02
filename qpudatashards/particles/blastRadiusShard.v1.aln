@@ -1,0 +1,14 @@
+schema BlastRadiusShard.v1
+  field blastradius_id    Int
+  field hex_index         String
+  field adjacency_depth   Int
+  field adjacency_decay_ms Int
+  field ker_tag           String  # 'K','E','R'
+  field roh_anchor_hex    String
+  field contract_name     String  # matches planeweights_contract.contract_name
+
+constraints
+  require adjacency_depth >= 0
+  require adjacency_decay_ms >= 0
+  require ker_tag in ["K","E","R"]
+end
