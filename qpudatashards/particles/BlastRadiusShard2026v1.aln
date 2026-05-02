@@ -1,0 +1,45 @@
+schema BlastRadiusShard2026v1
+  field bro_id             Int        # mirrors blastradius_object.bro_id
+  field scope_type         String     # SHARD, NODE, VNODE, REPO
+  field scope_ref          String     # shardid, nodeid, vnodeid, or reponame
+
+  field center_region      String     # Phoenix-AZ, Central-AZ, Global, HostLocal
+  field center_node        String?    # optional node identifier
+
+  field radius_meters      Float?     # approximate physical radius
+  field radius_hops        Int?       # graph hops in node_adjacency
+  field radius_time_hours  Float?     # effect horizon in hours
+
+  field primary_plane      String     # hydraulics, energy, materials, biodiversity, health, dataquality, topology, finance
+  field secondary_planes   String?    # comma-separated list
+
+  field k_band             String?    # HIGH, MEDIUM, LOW
+  field e_band             String?    # HIGH, MEDIUM, LOW
+  field r_band             String?    # LOW, MEDIUM, HIGH
+  field vt_residual_est    Float?     # representative V_t in 0..1
+
+  field neighbor_zones     String?    # "UPSTREAM:PHX-HYDRO-02;DOWNSTREAM:PHX-HYDRO-03"
+  field neighbor_count     Int?       # number of neighbors considered
+
+  field continuity_grade   String?    # A,B,C continuity for NODE/VNODE
+  field nonactuating_only  Bool       # true if only non-actuating workloads allowed
+
+  field sovereignty_tag    String?    # SOVEREIGN-LOCAL, MULTI-JURIS, LEDGER-ANCHORED
+  field governance_profile String?    # OBSERVEONLY, OKTOPLAN, GOVONLY, NEEDSREVIEW
+  field metaphysical_code  String?    # short label: HEALTH-DET0X, HYDRO-BUFFER, etc.
+
+  field hex_descriptor     String     # compact hex encoding of key fields
+  field descriptor_version String     # e.g. BR2026v1
+
+  field created_utc        String     # ISO8601
+  field updated_utc        String     # ISO8601
+endschema
+
+constraints
+  require scope_type in ["SHARD","NODE","VNODE","REPO"]
+  require k_band == null or k_band in ["HIGH","MEDIUM","LOW"]
+  require e_band == null or e_band in ["HIGH","MEDIUM","LOW"]
+  require r_band == null or r_band in ["LOW","MEDIUM","HIGH"]
+  require radius_hops == null or radius_hops >= 0
+  require neighbor_count == null or neighbor_count >= 0
+end
