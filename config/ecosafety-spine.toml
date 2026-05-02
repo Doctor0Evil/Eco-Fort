@@ -1,0 +1,20 @@
+# filename: config/ecosafety-spine.toml
+
+[plane_weights]
+contract = "CyboquaticTrustAndEcoPlanes2026v1"
+roh_anchor_hex = "0xa1b2c3d4e5f67890"
+
+[blast_radius]
+enabled = true
+max_adjacency_depth = 3
+
+[lane_governance]
+lane_invariant = "LaneGovernance.v1"
+
+[topology_risk]
+enabled = true
+rtopology_weight = 0.4
+
+[mt6883]
+registry_enabled = true
+roh_risk_threshold = 0.13
