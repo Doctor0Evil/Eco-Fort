@@ -43,3 +43,136 @@ pub struct RepoManifest {
     pub layers: Vec<Layer>,
     pub hints: Vec<RoleHint>,
 }
+// filename: src/lib.rs (continued)
+
+#[derive(Debug, thiserror::Error)]
+pub enum ManifestError {
+    #[error("IO error while reading manifest SQL: {0}")]
+    Io(#[from] std::io::Error),
+
+    #[error("SQLite error while loading manifest: {0}")]
+    Sql(#[from] rusqlite::Error),
+
+    #[error("No repo_index row found in econet_repo_index.sql")]
+    NoRepoIndex,
+
+    #[error("Manifest file not found at {0}")]
+    NotFound(String),
+}
+
+pub fn default_manifest_path(repo_root: &Path) -> PathBuf {
+    repo_root.join(".econet").join("econet_repo_index.sql")
+}
+
+pub fn load_manifest_from_repo(repo_root: &Path) -> Result<RepoManifest, ManifestError> {
+    let path = default_manifest_path(repo_root);
+    if !path.exists() {
+        return Err(ManifestError::NotFound(path.display().to_string()));
+    }
+
+    let sql = fs::read_to_string(&path)?;
+    load_manifest_from_sql(&sql)
+}
+
+/// Load a RepoManifest from raw SQL text (useful for tests or embedding).
+pub fn load_manifest_from_sql(sql: &str) -> Result<RepoManifest, ManifestError> {
+    let conn = Connection::open_in_memory()?;
+    conn.execute_batch(sql)?;
+
+    // Fetch index row (we expect exactly one).
+    let mut stmt = conn.prepare(
+        r#"SELECT
+               repo_name,
+               github_slug,
+               role_band,
+               visibility,
+               language_primary,
+               description,
+               ecosafety_binding,
+               shard_protocol,
+               lane_default,
+               ker_target_k,
+               ker_target_e,
+               ker_target_r,
+               non_actuating_only
+           FROM econet_repo_index
+           LIMIT 1"#,
+    )?;
+
+    let idx_iter = stmt.query_map(NO_PARAMS, |row| {
+        Ok(RepoIndex {
+            repo_name: row.get(0)?,
+            github_slug: row.get(1)?,
+            role_band: row.get(2)?,
+            visibility: row.get(3)?,
+            language_primary: row.get(4)?,
+            description: row.get(5)?,
+            ecosafety_binding: row.get(6)?,
+            shard_protocol: row.get(7)?,
+            lane_default: row.get(8)?,
+            ker_target_k: row.get(9)?,
+            ker_target_e: row.get(10)?,
+            ker_target_r: row.get(11)?,
+            non_actuating_only: {
+                let v: i64 = row.get(12)?;
+                v != 0
+            },
+        })
+    })?;
+
+    let index = idx_iter.into_iter().next().transpose()?.ok_or(ManifestError::NoRepoIndex)?;
+
+    // Fetch layers.
+    let mut layer_stmt = conn.prepare(
+        r#"SELECT
+               layer_name,
+               layer_tier,
+               languages,
+               description,
+               contracts
+           FROM econet_layer
+           WHERE repo_name = ?1
+           ORDER BY layer_id ASC"#,
+    )?;
+
+    let layer_iter = layer_stmt.query_map([&index.repo_name], |row| {
+        Ok(Layer {
+            layer_name: row.get(0)?,
+            layer_tier: row.get(1)?,
+            languages: row.get(2)?,
+            description: row.get(3)?,
+            contracts: row.get(4)?,
+        })
+    })?;
+
+    let mut layers = Vec::new();
+    for l in layer_iter {
+        layers.push(l?);
+    }
+
+    // Fetch role hints.
+    let mut hint_stmt = conn.prepare(
+        r#"SELECT key, value
+           FROM econet_role_hint
+           WHERE repo_name = ?1
+           ORDER BY hint_id ASC"#,
+    )?;
+
+    let hint_iter = hint_stmt.query_map([&index.repo_name], |row| {
+        Ok(RoleHint {
+            key: row.get(0)?,
+            value: row.get(1)?,
+        })
+    })?;
+
+    let mut hints = Vec::new();
+    for h in hint_iter {
+        hints.push(h?);
+    }
+
+    Ok(RepoManifest {
+        index,
+        layers,
+        hints,
+    })
+}
