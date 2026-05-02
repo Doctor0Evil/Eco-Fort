@@ -1,0 +1,20 @@
+schema LaneStatusShard.v1
+  field shardid         Int       # FK into shardinstance
+  field nodeid          String
+  field current_lane    String    # RESEARCH,EXPPROD,PROD
+  field proposed_lane   String    # same domain
+  field kmetric         Float
+  field emetric         Float
+  field rmetric         Float
+  field vtmax           Float
+  field evidence_window_ms Int
+  field decision        String    # APPROVE, REJECT, HOLD
+  field rationale       String
+  field issuedby        String    # DID or system agent
+  field timestamputc    String
+
+constraints
+  require current_lane in ["RESEARCH","EXPPROD","PROD"]
+  require proposed_lane in ["RESEARCH","EXPPROD","PROD"]
+  require decision in ["APPROVE","REJECT","HOLD"]
+end
