@@ -1,0 +1,9 @@
+Table Name,Description,Key Columns
+repo,"Catalog of all repositories in the constellation.","repo_id;name;github_slug;visibility;role_band"
+repo_file,"Index of files within repositories.","file_id;repo_id;rel_path;ext;dir_class"
+aln_schema,"Registry of ALN schema definitions.","schema_id;schema_name;version_tag;category"
+aln_particle,"Index of ALN particle definitions within schemas.","particle_id;schema_id;particle_name;role;lyap_channel"
+aln_field,"Index of fields within ALN particles.","field_id;particle_id;field_name;is_risk_coord;units"
+corridor_definition,"Registry of risk coordinate safety bands.","corridor_id;varid;safe;gold;hard;weight;lyap_channel"
+shard_instance,"Registry of concrete evidence shard instances.","shard_id;node_id;region;lane;k_metric;e_metric;r_metric;kerdeployable"
+knowledge_eco_score,"Meta-table for KER scores of constellation objects.","score_id;scope_type;scope_ref_id;k_factor;e_factor;r_factor"
