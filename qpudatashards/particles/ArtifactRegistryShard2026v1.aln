@@ -1,0 +1,173 @@
+aln ArtifactRegistryShard2026v1
+version 1.0.0
+controllerid ECO-EcoFort-ArtifactRegistry-0001
+owneralnid bostrom18sd2ujv24ual9c9pshtxys6j8knh6xaead9ye7
+network ALN-MAINNET
+issuedutc 2026-05-02T23:10:00Z
+
+enum ArtifactKind2026v1
+  BINARY
+  KERNEL
+  ROUTINE
+  QPUDATASHARD
+  GOVLOG
+  HEALTHCARE_PLAN
+  INDEX_DB
+endenum
+
+enum Lane2026v1
+  RESEARCH
+  EXPPROD
+  PROD
+endenum
+
+enum KerBand2026v1
+  SAFE
+  GUARDED
+  BLOCKED
+endenum
+
+record ArtifactRegistryEntry2026v1
+  artifactid       uint64
+
+  repoid           uint64
+  repofileid       uint64
+  shardid          uint64    -- 0 if none
+  catalogid        uint64    -- 0 if none
+  mt6883registryid uint64    -- 0 if none
+
+  repotarget       string
+  destinationpath  string
+  filename         string
+  fileext          string
+  artifactkind     ArtifactKind2026v1
+
+  contenthash      string
+  sizebytes        uint64
+
+  primaryplane     string
+  secondaryplanes  string
+  lane             Lane2026v1
+  kerband          KerBand2026v1
+  planecontractid  uint64
+  blastradiusid    uint64
+
+  kmetric          float32
+  emetric          float32
+  rmetric          float32
+  vtmax            float32
+  kerdeployable    bool
+
+  evidencehex      string
+  rohanchorhex     string
+  signingdid       string
+  provenancehex    string
+
+  createdutc       string
+  updatedutc       string
+  active           bool
+endrecord
+
+record ArtifactProvenanceEntry2026v1
+  provenanceid     uint64
+  artifactid       uint64
+
+  cirunid          string
+  workflowfile     string
+  repo             string
+  energymode       string
+  status           string
+  sharddbpath      string
+  shardcount       uint64
+
+  lane             Lane2026v1
+  kmetric          float32
+  emetric          float32
+  rmetric          float32
+  vtmax            float32
+  kerdeployable    bool
+  rtopology        float32
+  wtopology        float32
+  planecontractid  uint64
+
+  evidencehex      string
+  rohanchorhex     string
+  signingdid       string
+  timestamputc     string
+endrecord
+
+section registry
+  -- Example seed row (can be removed in production)
+  ArtifactRegistryEntry2026v1
+    artifactid       0
+    repoid           0
+    repofileid       0
+    shardid          0
+    catalogid        0
+    mt6883registryid 0
+
+    repotarget       Eco-Fort
+    destinationpath  db
+    filename         dbartifactregistry.sql
+    fileext          sql
+    artifactkind     INDEX_DB
+
+    contenthash      0x00
+    sizebytes        0
+
+    primaryplane     dataquality
+    secondaryplanes  
+    lane             RESEARCH
+    kerband          SAFE
+    planecontractid  0
+    blastradiusid    0
+
+    kmetric          0.0
+    emetric          0.0
+    rmetric          0.0
+    vtmax            0.0
+    kerdeployable    false
+
+    evidencehex      0x00
+    rohanchorhex     0x00
+    signingdid       bostrom18sd2ujv24ual9c9pshtxys6j8knh6xaead9ye7
+    provenancehex    0x00
+
+    createdutc       2026-05-02T23:10:00Z
+    updatedutc       2026-05-02T23:10:00Z
+    active           true
+  end
+endsection
+
+section provenance
+  -- Example seed row (can be removed in production)
+  ArtifactProvenanceEntry2026v1
+    provenanceid     0
+    artifactid       0
+
+    cirunid          CI-LOCAL-INIT-0000
+    workflowfile     .github/workflows/local-bootstrap.yml
+    repo             Doctor0Evil/Eco-Fort
+    energymode       LOWPOWER
+    status           COMPLETED
+    sharddbpath      Eco-Fort/constellation.db
+    shardcount       0
+
+    lane             RESEARCH
+    kmetric          0.0
+    emetric          0.0
+    rmetric          0.0
+    vtmax            0.0
+    kerdeployable    false
+    rtopology        0.0
+    wtopology        0.0
+    planecontractid  0
+
+    evidencehex      0x00
+    rohanchorhex     0x00
+    signingdid       bostrom18sd2ujv24ual9c9pshtxys6j8knh6xaead9ye7
+    timestamputc     2026-05-02T23:10:00Z
+  end
+endsection
+
+end
