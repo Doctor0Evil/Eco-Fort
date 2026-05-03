@@ -1,13 +1,58 @@
 -- filename: dbdefinitionregistry.sql
 -- destination: Eco-Fort/db/dbdefinitionregistry.sql
--- DefinitionRegistry2026v1 spine for DR-1 through DR-10.
+-- DefinitionRegistry2026v1 spine for contracts and DR-1 through DR-10.
 
 PRAGMA foreign_keys = ON;
 
 ----------------------------------------------------------------------
--- 0. Core registry tables
+-- 0. Core registry tables: contracts and definition registry
 ----------------------------------------------------------------------
 
+-- High-level contracts for frozen grammars and governance definitions.
+CREATE TABLE IF NOT EXISTS definitioncontract (
+  contractid        TEXT PRIMARY KEY,
+  scope             TEXT NOT NULL,          -- ECOSAFETY_CORE, PLANE_WEIGHTS, etc.
+  registryversion   TEXT NOT NULL,          -- e.g. 2026v1
+  description       TEXT NOT NULL,
+  created_utc       TEXT NOT NULL,          -- ISO-8601
+  updated_utc       TEXT NOT NULL           -- ISO-8601
+);
+
+-- Canonical mapping from logical definition names to concrete artifacts.
+CREATE TABLE IF NOT EXISTS definitionregistry (
+  definitionid      INTEGER PRIMARY KEY AUTOINCREMENT,
+
+  contractid        TEXT NOT NULL
+                    REFERENCES definitioncontract(contractid)
+                    ON DELETE CASCADE,
+
+  scope             TEXT NOT NULL,          -- ECOSAFETY_CORE, LANE_GOVERNANCE, etc.
+  logicalname       TEXT NOT NULL,          -- ecosafety.grammar.core.2026v1
+  kind              TEXT NOT NULL,          -- ALN_SCHEMA, SQL_SCHEMA, SQL_VIEW, RUST_MODULE, DOC_SPEC
+
+  repo              TEXT NOT NULL,          -- Eco-Fort, EcoNet, Virta-Sys, ...
+  destinationpath   TEXT NOT NULL,          -- db/..., src/..., aln/...
+  filename          TEXT NOT NULL,
+  language          TEXT NOT NULL,          -- SQLite, ALN, Rust, Markdown
+
+  versiontag        TEXT NOT NULL,          -- 2026v1, v1.0.0, etc.
+  active            INTEGER NOT NULL DEFAULT 1
+                    CHECK (active IN (0,1)),
+
+  primaryplane      TEXT NOT NULL,          -- 'all' or specific plane; '' if N/A
+  appliescope       TEXT NOT NULL,          -- CONSTELLATION, REPO, SHARD, NODE, MT6883
+
+  summary           TEXT NOT NULL,
+
+  signingdid        TEXT NOT NULL,
+  issued_utc        TEXT NOT NULL,
+  updated_utc       TEXT NOT NULL,
+
+  UNIQUE (logicalname, versiontag),
+  UNIQUE (repo, destinationpath, filename, versiontag)
+);
+
+-- Lightweight table indexing DR-1 → DR-10 view bindings for fast lookup.
 CREATE TABLE IF NOT EXISTS definition_registry (
     def_id       INTEGER PRIMARY KEY,
     def_code     TEXT NOT NULL UNIQUE,   -- DR1_SQLITE_LYAPUNOV, ...
@@ -27,7 +72,110 @@ CREATE TABLE IF NOT EXISTS definition_param (
 );
 
 ----------------------------------------------------------------------
--- 1. DR-1 – SQLite Lyapunov residual V_t = Σ w_j r_j^2
+-- 1. Helpful indexes for definitionregistry
+----------------------------------------------------------------------
+
+CREATE INDEX IF NOT EXISTS idx_definition_scope_active
+  ON definitionregistry (scope, active);
+
+CREATE INDEX IF NOT EXISTS idx_definition_repo_active
+  ON definitionregistry (repo, active);
+
+CREATE INDEX IF NOT EXISTS idx_definition_contract
+  ON definitionregistry (contractid, active);
+
+CREATE INDEX IF NOT EXISTS idx_definition_kind_language
+  ON definitionregistry (kind, language);
+
+----------------------------------------------------------------------
+-- 2. Seed rows for 2026v1 contracts (extend as needed)
+----------------------------------------------------------------------
+
+INSERT OR IGNORE INTO definitioncontract (
+  contractid, scope, registryversion, description, created_utc, updated_utc
+) VALUES
+  ('EcosafetyContinuity2026v1', 'ECOSAFETY_CORE', '2026v1',
+   'Frozen ecosafety grammar: planes, coordinates, corridors, KER, residual.',
+   '2026-05-03T07:15:00Z', '2026-05-03T07:15:00Z'),
+  ('EcosafetyPlaneWeights2026v1', 'PLANE_WEIGHTS', '2026v1',
+   'Plane weights, non-compensation invariants, and topology plane wiring.',
+   '2026-05-03T07:15:00Z', '2026-05-03T07:15:00Z'),
+  ('LaneGovernance2026v1', 'LANE_GOVERNANCE', '2026v1',
+   'Lane predicates, lane status shards, lane verdicts, and CI gates.',
+   '2026-05-03T07:15:00Z', '2026-05-03T07:15:00Z'),
+  ('TopologyRisk2026v1', 'TOPOLOGY_RISK', '2026v1',
+   'Topology audit, Itopology/rtopology metrics, and governance drift.',
+   '2026-05-03T07:15:00Z', '2026-05-03T07:15:00Z'),
+  ('BlastRadius2026v1', 'BLAST_RADIUS', '2026v1',
+   'Blast radius, adjacency graph, and tbr2026v1hex descriptors.',
+   '2026-05-03T07:15:00Z', '2026-05-03T07:15:00Z'),
+  ('ArtifactRegistry2026v1', 'ARTIFACT_REGISTRY', '2026v1',
+   'Universal artifact registry and provenance for governed artifacts.',
+   '2026-05-03T07:15:00Z', '2026-05-03T07:15:00Z'),
+  ('MT6883Continuity2026v1', 'MT6883_CONTINUITY', '2026v1',
+   'Continuity grades, RoH envelopes, and governance bindings for MT6883.',
+   '2026-05-03T07:15:00Z', '2026-05-03T07:15:00Z');
+
+----------------------------------------------------------------------
+-- 3. Seed rows for key grammar and governance definitions
+----------------------------------------------------------------------
+
+INSERT OR IGNORE INTO definitionregistry (
+  contractid, scope, logicalname, kind,
+  repo, destinationpath, filename, language,
+  versiontag, active, primaryplane, appliescope,
+  summary, signingdid, issued_utc, updated_utc
+) VALUES
+  ('EcosafetyContinuity2026v1', 'ECOSAFETY_CORE',
+   'ecosafety.grammar.core.2026v1', 'SQL_SCHEMA',
+   'Eco-Fort', 'db/ecosafetygrammarcore.sql', 'ecosafetygrammarcore.sql', 'SQLite',
+   '2026v1', 1, 'all', 'CONSTELLATION',
+   'Canonical ecosafety grammar: planes, coordinates, corridors, KER, residualkernel, residualterm.',
+   'bostrom18sd2ujv24ual9c9pshtxys6j8knh6xaead9ye7',
+   '2026-05-03T07:15:00Z', '2026-05-03T07:15:00Z'),
+
+  ('EcosafetyPlaneWeights2026v1', 'PLANE_WEIGHTS',
+   'ecosafety.planeweights.2026v1', 'ALN_SCHEMA',
+   'aln-platform-ecosystem', 'aln/ecosafetyPlaneWeightsShard2026v1.aln', 'ecosafetyPlaneWeightsShard2026v1.aln', 'ALN',
+   '2026v1', 1, 'all', 'CONSTELLATION',
+   'Plane weights and non-compensation contract including topology plane.',
+   'bostrom18sd2ujv24ual9c9pshtxys6j8knh6xaead9ye7',
+   '2026-05-03T07:15:00Z', '2026-05-03T07:15:00Z'),
+
+  ('LaneGovernance2026v1', 'LANE_GOVERNANCE',
+   'lane.status.shard.2026v1', 'ALN_SCHEMA',
+   'aln-platform-ecosystem', 'aln/LaneStatusShard2026v1.aln', 'LaneStatusShard2026v1.aln', 'ALN',
+   '2026v1', 1, 'all', 'SHARD',
+   'Lane status shard schema for Virta-Sys lane governor and CI.',
+   'bostrom18sd2ujv24ual9c9pshtxys6j8knh6xaead9ye7',
+   '2026-05-03T07:15:00Z', '2026-05-03T07:15:00Z'),
+
+  ('TopologyRisk2026v1', 'TOPOLOGY_RISK',
+   'virtasys.topology.audit.sql.2026v1', 'SQL_SCHEMA',
+   'Eco-Fort', 'db/dbvirtatopologyaudit.sql', 'dbvirtatopologyaudit.sql', 'SQLite',
+   '2026v1', 1, 'topology', 'CONSTELLATION',
+   'Topology audit schema computing Itopology and rtopology.',
+   'bostrom18sd2ujv24ual9c9pshtxys6j8knh6xaead9ye7',
+   '2026-05-03T07:15:00Z', '2026-05-03T07:15:00Z'),
+
+  ('BlastRadius2026v1', 'BLAST_RADIUS',
+   'econet.blastradius.schema.2026v1', 'SQL_SCHEMA',
+   'Eco-Fort', 'db/dbblastradiusindex.sql', 'dbblastradiusindex.sql', 'SQLite',
+   '2026v1', 1, 'all', 'NODE',
+   'Blast radius and adjacency schema with tbr2026v1hex descriptors.',
+   'bostrom18sd2ujv24ual9c9pshtxys6j8knh6xaead9ye7',
+   '2026-05-03T07:15:00Z', '2026-05-03T07:15:00Z'),
+
+  ('ArtifactRegistry2026v1', 'ARTIFACT_REGISTRY',
+   'econet.artifact.registry.sql.2026v1', 'SQL_SCHEMA',
+   'Eco-Fort', 'db/dbartifactregistry.sql', 'dbartifactregistry.sql', 'SQLite',
+   '2026v1', 1, 'dataquality', 'REPO',
+   'Universal artifact registry and provenance tables.',
+   'bostrom18sd2ujv24ual9c9pshtxys6j8knh6xaead9ye7',
+   '2026-05-03T07:15:00Z', '2026-05-03T07:15:00Z');
+
+----------------------------------------------------------------------
+-- 4. DR-1 – SQLite Lyapunov residual V_t = Σ w_j r_j^2
 --
 -- Assumes:
 --   residualterm(def_code, coord_id, alpha)
@@ -49,7 +197,7 @@ WHERE t.def_code = 'LYAPUNOV_CORE_2026'
 GROUP BY s.shard_id, s.ts;
 
 ----------------------------------------------------------------------
--- 2. DR-2 – Topology waste penalties
+-- 5. DR-2 – Topology waste penalties
 --
 -- Assumes:
 --   nodeenergyprofile(node_id, ts_window, non_actuating_joules, joules_min_efficient)
@@ -76,7 +224,7 @@ LEFT JOIN largeparticlefile AS lpf
 GROUP BY n.node_id, n.ts_window;
 
 ----------------------------------------------------------------------
--- 3. DR-3 – Canal velocity coordinate r_canal
+-- 6. DR-3 – Canal velocity coordinate r_canal
 --
 -- Assumes:
 --   blastradiusindex(scope_id, plane, radius_meters, radius_hours)
@@ -96,7 +244,7 @@ JOIN scope_to_shard AS s
   ON s.scope_id = bri.scope_id;
 
 ----------------------------------------------------------------------
--- 4. DR-4 – largeparticlefile chunk & hash cost profile
+-- 7. DR-4 – largeparticlefile chunk & hash cost profile
 --
 -- Assumes:
 --   largeparticlefile(file_id, sizebytes, chunksizebytes, hashstrategy)
@@ -124,7 +272,7 @@ LEFT JOIN largeparticleblock AS b
 GROUP BY f.file_id;
 
 ----------------------------------------------------------------------
--- 5. DR-5 – MT6883 continuity score and grade
+-- 8. DR-5 – MT6883 continuity score and grade
 --
 -- Assumes:
 --   mt6883registry(mt_id, shard_id)
@@ -204,21 +352,21 @@ LEFT JOIN neighbors AS n
   ON n.mt_id = m.mt_id;
 
 ----------------------------------------------------------------------
--- 6. DR-6 – Artifact provenance commitment
+-- 9. DR-6 – Artifact provenance commitment
 --
 -- Assumes:
---   artifactregistry(artifact_id, ...)
---   artifactprovenance(prov_id, artifact_id, ts, prev_prov_id, payload_hash)
+--   artifactregistry(artifactid, ...)
+--   artifactprovenance(provenanceid, artifactid, ts, prev_prov_id, payload_hash)
 ----------------------------------------------------------------------
 
 CREATE VIEW IF NOT EXISTS dr6_provenance_chain_view AS
 SELECT
-    p.artifact_id,
-    p.prov_id,
-    p.prev_prov_id,
-    p.ts,
-    p.payload_hash,
-    p.rowid AS chain_height
+    p.artifactid      AS artifact_id,
+    p.provenanceid    AS prov_id,
+    p.prev_prov_id    AS prev_prov_id,
+    p.ts              AS ts,
+    p.payload_hash    AS payload_hash,
+    p.rowid           AS chain_height
 FROM artifactprovenance AS p;
 
 CREATE TABLE IF NOT EXISTS artifactprovenance_commitment (
@@ -231,7 +379,7 @@ CREATE TABLE IF NOT EXISTS artifactprovenance_commitment (
 );
 
 ----------------------------------------------------------------------
--- 7. DR-7 – Lane quarantine states
+-- 10. DR-7 – Lane quarantine states
 --
 -- Assumes:
 --   shardlane(shard_id, lanecode)
@@ -271,16 +419,16 @@ JOIN latest AS l
  AND l.rn = 1;
 
 ----------------------------------------------------------------------
--- 8. DR-8 – Emergent planes under frozen grammar
+-- 11. DR-8 – Emergent planes under frozen grammar
 ----------------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS emergent_plane_registry (
-    plane_id          INTEGER PRIMARY KEY,
-    plane_code        TEXT NOT NULL UNIQUE,   -- microbiome, noise, ...
-    core_version      TEXT NOT NULL,          -- EcosafetyGrammarCore2026v1
-    extension_contract TEXT NOT NULL,         -- EcosafetyContinuity2030v1
-    enabled_since     TEXT NOT NULL,
-    description       TEXT NOT NULL
+    plane_id           INTEGER PRIMARY KEY,
+    plane_code         TEXT NOT NULL UNIQUE,
+    core_version       TEXT NOT NULL,          -- EcosafetyGrammarCore2026v1
+    extension_contract TEXT NOT NULL,          -- EcosafetyContinuity2030v1
+    enabled_since      TEXT NOT NULL,
+    description        TEXT NOT NULL
 );
 
 CREATE VIEW IF NOT EXISTS dr8_emergent_planes_view AS
@@ -294,7 +442,7 @@ SELECT
 FROM emergent_plane_registry;
 
 ----------------------------------------------------------------------
--- 9. DR-9 – knowledgeecoscore time windows
+-- 12. DR-9 – knowledgeecoscore time windows
 --
 -- Assumes:
 --   knowledgeecoscore(shard_id, ts, k_value, e_value, r_value)
@@ -356,7 +504,7 @@ LEFT JOIN medium_window AS m ON m.shard_id = s.shard_id
 LEFT JOIN long_window   AS l ON l.shard_id = s.shard_id;
 
 ----------------------------------------------------------------------
--- 10. DR-10 – IoT telemetry → shardinstance federation
+-- 13. DR-10 – IoT telemetry → shardinstance federation
 ----------------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS iot_telemetry_raw (
@@ -386,7 +534,7 @@ SELECT
 FROM iot_telemetry_window AS w;
 
 ----------------------------------------------------------------------
--- 11. Seed DR-1 → DR-10 codes into definition_registry
+-- 14. Seed DR-1 → DR-10 codes into definition_registry
 ----------------------------------------------------------------------
 
 INSERT OR IGNORE INTO definition_registry
