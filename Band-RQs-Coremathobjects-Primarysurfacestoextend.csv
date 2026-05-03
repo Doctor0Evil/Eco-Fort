@@ -1,0 +1,4 @@
+"Band","RQs","Core math objects","Primary surfaces to extend"
+"1","RQ‑1,2,6,10","VtV_tVt​, KER, safestep, Jw,nJ_{w,n}Jw,n​, hash chains, risk coords","ecosafetygrammarcore.sql, residualkernel/term, shardinstance, artifactregistry/provenance, telemetry windows"
+"2","RQ‑3,5,8,9","Canal velocity, continuity scores, emergent planes, reward windows","adjacencygraph, blastradiusindex, mt6883registry, knowledgeecoscore"
+"3","RQ‑4,7","Block chunking cost models, conceptual lane “downgrade” analysis (encoded only as quarantines, not actual lane decreases)","largeparticlefile/block, lanepolicy, lanestatusshard"
