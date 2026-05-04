@@ -1,0 +1,18 @@
+# filename: Cargo.toml
+# destination: Eco-Fort/crates/econet-governance-api/Cargo.toml
+[package]
+name = "econet-governance-api"
+version = "0.1.0"
+edition = "2021"
+description = "Unified governance API for Virta-Sys lane, placement, topology, contracts, and upgrade verification."
+license = "MIT"
+
+[dependencies]
+rusqlite = { version = "0.31", features = ["bundled"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+thiserror = "1.0"
+chrono = { version = "0.4", features = ["serde"] }
+
+[dev-dependencies]
+tempfile = "3.10"
