@@ -8,7 +8,6 @@ PRAGMA foreign_keys = ON;
 -- 0. Core registry tables: contracts and definition registry
 ----------------------------------------------------------------------
 
--- High-level contracts for frozen grammars and governance definitions.
 CREATE TABLE IF NOT EXISTS definitioncontract (
   contractid        TEXT PRIMARY KEY,
   scope             TEXT NOT NULL,          -- ECOSAFETY_CORE, PLANE_WEIGHTS, etc.
@@ -18,7 +17,6 @@ CREATE TABLE IF NOT EXISTS definitioncontract (
   updated_utc       TEXT NOT NULL           -- ISO-8601
 );
 
--- Canonical mapping from logical definition names to concrete artifacts.
 CREATE TABLE IF NOT EXISTS definitionregistry (
   definitionid      INTEGER PRIMARY KEY AUTOINCREMENT,
 
@@ -171,6 +169,14 @@ INSERT OR IGNORE INTO definitionregistry (
    'Eco-Fort', 'db/dbartifactregistry.sql', 'dbartifactregistry.sql', 'SQLite',
    '2026v1', 1, 'dataquality', 'REPO',
    'Universal artifact registry and provenance tables.',
+   'bostrom18sd2ujv24ual9c9pshtxys6j8knh6xaead9ye7',
+   '2026-05-03T07:15:00Z', '2026-05-03T07:15:00Z'),
+
+  ('ArtifactRegistry2026v1', 'ARTIFACT_REGISTRY',
+   'econet.artifact.registry.index.sql.2026v1', 'SQL_VIEW',
+   'Eco-Fort', 'db/dbartifactregistryindex.sql', 'dbartifactregistryindex.sql', 'SQLite',
+   '2026v1', 1, 'dataquality', 'CONSTELLATION',
+   'Helper views joining artifactregistry to shardinstance, planeweights, blastradius, and provenance.',
    'bostrom18sd2ujv24ual9c9pshtxys6j8knh6xaead9ye7',
    '2026-05-03T07:15:00Z', '2026-05-03T07:15:00Z');
 
@@ -538,25 +544,25 @@ FROM iot_telemetry_window AS w;
 ----------------------------------------------------------------------
 
 INSERT OR IGNORE INTO definition_registry
-    (def_code, scope, aln_particle, db_anchor, description)
+    (def_id, def_code, scope, aln_particle, db_anchor, description)
 VALUES
-('DR1_SQLITE_LYAPUNOV',    'LyapunovResidual',   'DefinitionRegistry2026v1', 'dbdefinitionregistry.sql#dr1_shard_residual_view',
+(1, 'DR1_SQLITE_LYAPUNOV',    'LyapunovResidual',   'DefinitionRegistry2026v1', 'dbdefinitionregistry.sql#dr1_shard_residual_view',
  'SQLite-only computation of Vt = Σ w_j r_j^2 per shard.'),
-('DR2_TOPOLOGY_PENALTIES', 'TopologyWaste',      'DefinitionRegistry2026v1', 'dbdefinitionregistry.sql#dr2_topology_waste_view',
+(2, 'DR2_TOPOLOGY_PENALTIES', 'TopologyWaste',      'DefinitionRegistry2026v1', 'dbdefinitionregistry.sql#dr2_topology_waste_view',
  'Idle congestion and fragmentation penalties on shared nodes.'),
-('DR3_CANAL_VELOCITY',     'CanalVelocity',      'DefinitionRegistry2026v1', 'dbdefinitionregistry.sql#dr3_canal_velocity_view',
+(3, 'DR3_CANAL_VELOCITY',     'CanalVelocity',      'DefinitionRegistry2026v1', 'dbdefinitionregistry.sql#dr3_canal_velocity_view',
  'Canal velocity coordinate r_canal from blast-radius metrics.'),
-('DR4_LARGEPARTICLE_PROFILE', 'LargeParticleProfile','DefinitionRegistry2026v1','dbdefinitionregistry.sql#dr4_largeparticle_cost_view',
+(4, 'DR4_LARGEPARTICLE_PROFILE', 'LargeParticleProfile','DefinitionRegistry2026v1','dbdefinitionregistry.sql#dr4_largeparticle_cost_view',
  'Chunk/hash cost profile for largeparticlefile artifacts.'),
-('DR5_MT6883_CONTINUITY',  'ContinuityGrade',    'DefinitionRegistry2026v1', 'dbdefinitionregistry.sql#dr5_mt6883_continuity_view',
+(5, 'DR5_MT6883_CONTINUITY',  'ContinuityGrade',    'DefinitionRegistry2026v1', 'dbdefinitionregistry.sql#dr5_mt6883_continuity_view',
  'Automatic MT6883 continuity score and grade.'),
-('DR6_PROVENANCE_COMMITMENT', 'ArtifactProvenance','DefinitionRegistry2026v1','dbdefinitionregistry.sql#dr6_provenance_chain_view',
+(6, 'DR6_PROVENANCE_COMMITMENT', 'ArtifactProvenance','DefinitionRegistry2026v1','dbdefinitionregistry.sql#dr6_provenance_chain_view',
  'Hash-chained artifact provenance with commitment table.'),
-('DR7_LANE_QUARANTINE',    'LaneQuarantine',     'DefinitionRegistry2026v1', 'dbdefinitionregistry.sql#dr7_lane_quarantine_view',
+(7, 'DR7_LANE_QUARANTINE',    'LaneQuarantine',     'DefinitionRegistry2026v1', 'dbdefinitionregistry.sql#dr7_lane_quarantine_view',
  'Quarantine flags that never reduce lane but tighten guards.'),
-('DR8_EMERGENT_PLANES',    'EcosafetyExtension', 'DefinitionRegistry2026v1', 'dbdefinitionregistry.sql#dr8_emergent_planes_view',
+(8, 'DR8_EMERGENT_PLANES',    'EcosafetyExtension', 'DefinitionRegistry2026v1', 'dbdefinitionregistry.sql#dr8_emergent_planes_view',
  'Registry of emergent ecosafety planes under extension contracts.'),
-('DR9_KNOWLEDGE_WINDOW_SET', 'KnowledgeEcoScore','DefinitionRegistry2026v1','dbdefinitionregistry.sql#dr9_knowledge_windows_view',
+(9, 'DR9_KNOWLEDGE_WINDOW_SET', 'KnowledgeEcoScore','DefinitionRegistry2026v1','dbdefinitionregistry.sql#dr9_knowledge_windows_view',
  'Short/medium/long knowledgeecoscore windows for rewards.'),
-('DR10_IOT_FEDERATION',    'SmartCityTelemetry', 'DefinitionRegistry2026v1', 'dbdefinitionregistry.sql#dr10_iot_aggregates_view',
+(10,'DR10_IOT_FEDERATION',    'SmartCityTelemetry', 'DefinitionRegistry2026v1', 'dbdefinitionregistry.sql#dr10_iot_aggregates_view',
  'IoT aggregation windows feeding shardinstance safely.');
