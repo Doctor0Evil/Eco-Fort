@@ -1,0 +1,12 @@
+﻿Column Name,Data Type,Description
+workload_id,TEXT,The unique identifier for the workload being evaluated.
+target_lane,TEXT,The lane to which the workload is attempting to transition.
+is_admissible,BOOLEAN,"TRUE if all admissibility criteria are met, FALSE otherwise."
+K_window,REAL,Windowed average K score.
+E_window,REAL,Windowed average E score.
+R_window,REAL,Windowed average R score.
+Vtrend_b,REAL,Slope of the residual trend line.
+corridors_ok,BOOLEAN,Status from lanestatusshard.corridorsok.
+planesok,BOOLEAN,Status from lanestatusshard.planesok.
+topologyok,BOOLEAN,Status from lanestatusshard.topologyok.
+lane_quarantined,BOOLEAN,TRUE if the workload is in quarantine.

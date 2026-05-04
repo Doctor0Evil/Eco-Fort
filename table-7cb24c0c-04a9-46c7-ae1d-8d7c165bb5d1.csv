@@ -1,0 +1,6 @@
+﻿Column Name,Data Type,Description
+shardid,TEXT,The unique identifier for the shard.
+short_eligible,BOOLEAN,Eligible based on the short-term window.
+medium_eligible,BOOLEAN,Eligible based on the medium-term window.
+long_eligible,BOOLEAN,Eligible based on the long-term window.
+reward_eligible,BOOLEAN,Eligible for reward if all window conditions are met.

@@ -1,0 +1,4 @@
+﻿Column Name,Data Type,Description
+shardid,TEXT,Foreign key referencing shardinstance.shardid.
+timestamp,DATETIME,"The timestamp for which the residual is calculated, from "shardinstance.timestamp.
+Vt,REAL,"The computed Lyapunov residual, ""V_t = \sum_j w_j r_{t,j}^2".

@@ -1,0 +1,9 @@
+﻿Column Name,Data Type,Description
+shardid,TEXT,Unique identifier for the shard.
+region,TEXT,Geographic or logical region where the shard resides.
+nodeid,TEXT,Identifier for the node hosting the shard.
+radius_meters,REAL,From vshardblast.
+radius_hours,REAL,From vshardblast.
+canal_velocity_m_per_h,REAL,Calculated as "radius_meters / NULLIF(radius_hours, 0)".
+r_canal,REAL,"Normalized canal velocity risk coordinate, clamped to [0,1]."
+vmax_m_per_h,REAL,The maximum allowed canal velocity from a corridor definition.

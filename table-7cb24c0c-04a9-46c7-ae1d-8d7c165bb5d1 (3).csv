@@ -1,0 +1,11 @@
+﻿Column Name,Data Type,Description
+shardid,TEXT,Foreign key referencing shardinstance.shardid.
+region,TEXT,Geographic or logical region where the shard resides.
+nodeid,TEXT,Identifier for the node hosting the shard.
+radius_meters,REAL,Maximum physical distance of the blast radius.
+radius_hours,REAL,Maximum propagation time of the blast radius.
+hops,INTEGER,Maximum graph hop count of the blast radius.
+primary_planes,TEXT,Comma-separated list of primary risk planes affected.
+secondary_planes,TEXT,Comma-separated list of secondary risk planes affected.
+continuity_grade,TEXT,The grade of continuity required for this node's placement.
+tbr2026v1hex,TEXT,Hexadecimal descriptor of the blast radius object.

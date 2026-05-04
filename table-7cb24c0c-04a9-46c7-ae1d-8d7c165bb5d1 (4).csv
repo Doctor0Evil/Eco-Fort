@@ -1,0 +1,14 @@
+﻿Column Name,Data Type,Description
+shardid,TEXT,Unique identifier for the shard.
+timestamp,DATETIME,The time instant of the safety snapshot.
+Vt,REAL,"The core Lyapunov residual, "V_t", from "vshardker.
+K,REAL,"The Knowledge score, "K_t.
+E,REAL,"The Energy score, "E_t.
+R,REAL,"The Risk score, "R_t.
+lane,TEXT,The current operational lane of the shard.
+rtopology,REAL,"The normalized topology risk coordinate, "r_{\text{topology}}", from "topologyriskmetric.
+Itopology,INTEGER,"The raw topology inconsistency index, "I_{\text{topology}}", from "topologyriskmetric.
+w_topology,REAL,"The weight for the topology plane, from "planeweights.
+Vt_with_topology,REAL,The final Lyapunov residual including the topology penalty: V_t + (w_{\text{topology}} \times r_{\text{topology}}^2).
+kernel_name,TEXT,The name of the residual kernel.
+kernel_version,TEXT,The version of the residual kernel.
