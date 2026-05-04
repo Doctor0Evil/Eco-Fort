@@ -29,19 +29,19 @@ CREATE TABLE IF NOT EXISTS artifactregistry (
                          ON DELETE SET NULL,
 
     -- Semantic file metadata
-    repotarget        TEXT    NOT NULL, -- mirror of repo.name
-    destinationpath   TEXT    NOT NULL, -- directory path inside repo
+    repotarget        TEXT    NOT NULL,
+    destinationpath   TEXT    NOT NULL,
     filename          TEXT    NOT NULL,
-    fileext           TEXT    NOT NULL, -- rs, so, aln, csv, db, etc.
-    artifactkind      TEXT    NOT NULL, -- BINARY,KERNEL,ROUTINE,QPUDATASHARD,GOVLOG,HEALTHCARE_PLAN,INDEX_DB
+    fileext           TEXT    NOT NULL,
+    artifactkind      TEXT    NOT NULL,
 
     -- Immutable content identity
-    contenthash       TEXT    NOT NULL, -- generic hex hash, algorithm defined in policy
+    contenthash       TEXT    NOT NULL,
     sizebytes         INTEGER,
 
     -- Ecosafety lanes and planes
-    primaryplane      TEXT    NOT NULL, -- energy,hydraulics,healthcare,dataquality,topology,finance,...
-    secondaryplanes   TEXT,             -- comma-separated planes
+    primaryplane      TEXT    NOT NULL,
+    secondaryplanes   TEXT,
     lane              TEXT    NOT NULL CHECK (
                            lane IN ('RESEARCH','EXPPROD','PROD')
                        ),
@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS artifactregistry (
                          REFERENCES planeweightscontract(contractid)
                          ON DELETE SET NULL,
     blastradiusid     INTEGER
-                         REFERENCES blastradiusindex(blasthradius_id)
+                         REFERENCES blastradiusobject(broid)
                          ON DELETE SET NULL,
 
     -- Cached KER / residual metrics at registration time
@@ -67,8 +67,8 @@ CREATE TABLE IF NOT EXISTS artifactregistry (
                        ),
 
     -- Evidence and RoH anchoring
-    evidencehex       TEXT    NOT NULL, -- descriptor of evidence bundle
-    rohanchorhex      TEXT,             -- Rule-of-History anchor
+    evidencehex       TEXT    NOT NULL,
+    rohanchorhex      TEXT,
 
     -- Signing / DID
     signingdid        TEXT    NOT NULL,
@@ -77,8 +77,8 @@ CREATE TABLE IF NOT EXISTS artifactregistry (
     provenancehex     TEXT,
 
     -- Timestamps
-    createdutc        TEXT    NOT NULL, -- ISO-8601
-    updatedutc        TEXT    NOT NULL, -- ISO-8601
+    createdutc        TEXT    NOT NULL,
+    updatedutc        TEXT    NOT NULL,
 
     -- Lifecycle flag; rows are never hard-deleted
     active            INTEGER NOT NULL DEFAULT 1 CHECK (
@@ -128,13 +128,13 @@ CREATE TABLE IF NOT EXISTS artifactprovenance (
                          REFERENCES artifactregistry(artifactid)
                          ON DELETE CASCADE,
 
-    cirunid           TEXT NOT NULL,     -- e.g. GitHub run ID
-    workflowfile      TEXT NOT NULL,     -- .github/workflows/...
-    repo              TEXT NOT NULL,     -- GitHub repo slug
-    energymode        TEXT NOT NULL,     -- LOWPOWER,BALANCED,HIGHTHROUGHPUT
-    status            TEXT NOT NULL,     -- COMPLETED,FAILED,CANCELLED
-    sharddbpath       TEXT,              -- path to DB this run updated
-    shardcount        INTEGER,           -- number of shards touched
+    cirunid           TEXT NOT NULL,
+    workflowfile      TEXT NOT NULL,
+    repo              TEXT NOT NULL,
+    energymode        TEXT NOT NULL,
+    status            TEXT NOT NULL,
+    sharddbpath       TEXT,
+    shardcount        INTEGER,
 
     -- Snapshot of ecosafety context at build/promotion time
     lane              TEXT NOT NULL CHECK (
@@ -158,7 +158,7 @@ CREATE TABLE IF NOT EXISTS artifactprovenance (
     rohanchorhex      TEXT,
     signingdid        TEXT NOT NULL,
 
-    timestamputc      TEXT NOT NULL,     -- ISO-8601 run completion time
+    timestamputc      TEXT NOT NULL,
 
     UNIQUE (artifactid, cirunid)
 );
